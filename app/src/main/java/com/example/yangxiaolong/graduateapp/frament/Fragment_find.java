@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.example.yangxiaolong.graduateapp.R;
 
@@ -31,6 +32,7 @@ public class Fragment_find extends Fragment implements OnClickListener{
     private LinearLayout linearLayout_point;
     private List<ImageView> imageViews_point;
     private List<ImageView> imageViews;
+    private ScrollView scrollView;
 
     private MyAdapater adapater;
 
@@ -90,9 +92,30 @@ public class Fragment_find extends Fragment implements OnClickListener{
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            this.scrollView.scrollTo(0,0);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
     private void initView(){
         this.viewPager_find_imgs=(ViewPager)view.findViewById(R.id.viewPager_find);
         this.linearLayout_point=(LinearLayout)view.findViewById(R.id.linearLayout_point);
+        this.scrollView=(ScrollView) view.findViewById(R.id.scrollView_find);
     }
 
 
