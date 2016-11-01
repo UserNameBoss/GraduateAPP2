@@ -17,6 +17,13 @@ import com.example.yangxiaolong.graduateapp.frament.Fragment_Hot;
 import com.example.yangxiaolong.graduateapp.frament.Fragment_find;
 import com.example.yangxiaolong.graduateapp.frament.Fragment_message;
 import com.example.yangxiaolong.graduateapp.frament.Fragment_my;
+import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_activityThem;
+import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_essence;
+import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_hot;
+import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_image;
+import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_section;
+import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_sound;
+import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_tyrant;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
     private ViewPager viewPager;
