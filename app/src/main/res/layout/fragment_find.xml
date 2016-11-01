@@ -20,7 +20,10 @@
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </LinearLayout>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/scrollView_find">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -438,4 +441,5 @@
         android:background="#F1F1F1"
         />
     </LinearLayout>
+</ScrollView>
 </LinearLayout>
