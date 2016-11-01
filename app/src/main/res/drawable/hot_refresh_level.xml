@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/btn_refresh_1" android:maxLevel="3" android:minLevel="0"/>
+    <item android:drawable="@drawable/base_loading_small_icon" android:minLevel="4" android:maxLevel="6"/>
+</level-list>
