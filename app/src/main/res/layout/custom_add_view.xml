@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:background="@drawable/add_bg"
+    android:orientation="vertical" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:id="@+id/imageButton_post"
+            android:onClick="add_post"
+            android:layout_weight="1"
+            android:layout_marginRight="100dp"
+            android:src="@drawable/btn_post_text_0"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:id="@+id/imageButton_audit"
+            android:onClick="add_audit"
+            android:layout_weight="1"
+            android:src="@drawable/btn_goto_audio_0"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="38dp"
+            android:layout_weight="1"
+            android:text="投稿"
+            android:textColor="#000000"
+            android:id="@+id/textView_post"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="145dp"
+            android:layout_weight="1"
+            android:text="审稿"
+            android:textColor="#000000"
+            android:id="@+id/textView_audit" />
+    </LinearLayout>
+</LinearLayout>
