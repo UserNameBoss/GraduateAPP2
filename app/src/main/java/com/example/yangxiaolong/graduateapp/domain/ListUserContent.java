@@ -30,19 +30,19 @@ public class ListUserContent {
     private String userNick;
 
 
-    public ListUserContent(int articleId, String userNick, int userLevel, int userId, String userIcon, int hits, int goods, int favorites, String title, String content, int comments, int categoryId) {
-        this.articleId = articleId;
-        this.userNick = userNick;
-        this.userLevel = userLevel;
-        this.userId = userId;
-        this.userIcon = userIcon;
-        this.hits = hits;
-        this.goods = goods;
-        this.favorites = favorites;
-        this.title = title;
-        this.content = content;
-        this.comments = comments;
+    public ListUserContent(int categoryId, int articleId, int comments, String content, String title, int favorites, int goods, int hits, String userIcon, int userId, int userLevel, String userNick) {
         this.categoryId = categoryId;
+        this.articleId = articleId;
+        this.comments = comments;
+        this.content = content;
+        this.title = title;
+        this.favorites = favorites;
+        this.goods = goods;
+        this.hits = hits;
+        this.userIcon = userIcon;
+        this.userId = userId;
+        this.userLevel = userLevel;
+        this.userNick = userNick;
     }
 
     public int getArticleId() {

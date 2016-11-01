@@ -2,6 +2,10 @@ package com.example.yangxiaolong.graduateapp.utils;
 import android.os.Handler;
 import android.os.Message;
 
+import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -9,7 +13,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Created by 宇杰 on 2016/11/1.
  */
@@ -17,7 +22,7 @@ import java.net.URLConnection;
  * 自定义Http使用工具类
  * Created by JZW on 2016/10/9.
  */
-public class NetWorkListUserContnet {
+public class NetWorkListUserContent{
 
     /**
          * 根据指定的网络路径返回字节数组
@@ -101,10 +106,10 @@ public class NetWorkListUserContnet {
             try {
                 while((len=inputStream.read(buffer))!=-1){
                     byteArrayOutputStream.write(buffer, 0, len);
-                }
+            }
 
-                return byteArrayOutputStream.toString();
-            } catch (IOException e) {
+            return byteArrayOutputStream.toString();
+        } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -113,53 +118,7 @@ public class NetWorkListUserContnet {
         }
 
 
-        private static void sendRequestWithPost(String path) {
-            InputStream inputStream=null;
-            OutputStream outputStream=null;
-            try {
-                //1.实例化网址对象
-                URL url=new URL(path);
-                //2.调用url.openConnection()获取连接对象
-                URLConnection urlConnection=url.openConnection();
-                HttpURLConnection httpURLConnection=(HttpURLConnection) urlConnection;
-                //3.设置连接相关参数
-                urlConnection.setConnectTimeout(3000);//设置连接超时时间
-                httpURLConnection.setRequestMethod("POST");//设置请求方式为POST
 
-                //打开运行从服务器端读取数据的开关,默认值为true,即默认情况下允许读取数据
-                //httpURLConnection.setDoInput(true);
-
-                //打开运行向服务器端写出数据的开关,默认值为false,即默认情况下不允许向服务器端写出数据
-                httpURLConnection.setDoOutput(true);//如果想向服务器端写出数据，必须设置为true
-
-                //将参数设置好准备随着提交POST请求对象一块将参数提交到服务器端
-                String param="userName=小丽&pwd=小白";
-                //得到输出流对象，目的是准备将数据写出到服务器端
-                outputStream=httpURLConnection.getOutputStream();
-                //将需要的数据转成字节数组写出到服务器端
-                outputStream.write(param.getBytes());
-
-			/*
-			 * 4.httpURLConnection.getResponseCode()返回响应码，此方法做了两件事：
-			 * 		A:将请求提交到服务器端
-			 * 		B:得到服务器返回的数据
-			 *
-			 */
-                int responseCode=httpURLConnection.getResponseCode();
-                if(responseCode==HttpURLConnection.HTTP_OK){
-                    //得到输入流对象，目的是可以读取服务器的数据
-                    inputStream=httpURLConnection.getInputStream();
-                    String content=inputStreamToString(inputStream);
-                    System.out.println("content="+content);
-                }else{
-                    throw new RuntimeException("访问网络失败！");
-                }
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-        }
 
         /**
          * 声明回调接口
@@ -236,12 +195,18 @@ public class NetWorkListUserContnet {
                                 e.printStackTrace();
                             }
                         }
-
                     }
-
                 }
             }).start();
         }
 
-
+        public static List<ListUserContent> getList(String json){
+            List<ListUserContent> list=new ArrayList<>();
+            try {
+                JSONArray jsonArray=new JSONArray(json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return list;
+        }
 }
