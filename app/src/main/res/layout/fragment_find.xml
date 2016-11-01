@@ -1,13 +1,441 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.yangxiaolong.graduateapp.frament.Fragment_find">
+    <!--标题栏-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="#ff3344"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="发现"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
 
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        >
+        <!--图片滚动所在根节点-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+          <android.support.v4.view.ViewPager
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/viewPager_find"
+            >
+            </android.support.v4.view.ViewPager>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:id="@+id/linearLayout_point"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/night_icon_pager_0"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/night_icon_pager_1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/night_icon_pager_1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/night_icon_pager_1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/img_near"
+                android:layout_centerVertical="true"
+                android:id="@+id/img_close"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="附近"
+                android:textSize="20sp"
+                android:layout_toRightOf="@+id/img_close"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="#454545"
+                android:id="@+id/text_close"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="附近帖子数"
+                android:textSize="15sp"
+                android:layout_below="@+id/text_close"
+                android:layout_toRightOf="@+id/img_close"
+                android:textColor="#A1A1A1"
+                android:layout_marginLeft="10dp"
+                />
+         <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/icon_arrow_r"
+             android:layout_alignParentRight="true"
+             android:layout_centerVertical="true"
+             android:layout_marginRight="20dp"
+             />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#F1F1F1"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:src="@drawable/img_bayou_show"
+                android:layout_centerVertical="true"
+
+                android:id="@+id/img_bayou_show"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="霸友秀"
+                android:textSize="20sp"
+
+                android:layout_toRightOf="@+id/img_bayou_show"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+
+                android:textColor="#454545"
+                android:id="@+id/text_bay_show"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="千万霸友聚集在此"
+                android:textSize="15sp"
+                android:layout_below="@+id/text_bay_show"
+                android:layout_toRightOf="@+id/img_bayou_show"
+
+                android:textColor="#A1A1A1"
+                android:layout_marginLeft="10dp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_arrow_r"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F1F1F1"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:src="@drawable/img_subject"
+                android:layout_centerVertical="true"
+
+                android:id="@+id/img_welfare"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="霸友秀"
+                android:textSize="20sp"
+
+                android:layout_toRightOf="@+id/img_welfare"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+
+                android:textColor="#454545"
+                android:id="@+id/text_welfare"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="千万霸友聚集在此"
+                android:textSize="15sp"
+                android:layout_below="@+id/text_welfare"
+                android:layout_toRightOf="@+id/img_welfare"
+
+                android:textColor="#A1A1A1"
+                android:layout_marginLeft="10dp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_arrow_r"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#F1F1F1"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:src="@drawable/img_game_list"
+                android:layout_centerVertical="true"
+
+                android:id="@+id/img_fuli"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="霸友福利"
+                android:textSize="20sp"
+
+                android:layout_toRightOf="@+id/img_fuli"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+
+                android:textColor="#454545"
+                android:id="@+id/text_fuli"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="免费赚福利"
+                android:textSize="15sp"
+                android:layout_below="@+id/text_fuli"
+                android:layout_toRightOf="@+id/img_fuli"
+
+                android:textColor="#A1A1A1"
+                android:layout_marginLeft="10dp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_arrow_r"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F1F1F1"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:src="@drawable/img_gdt"
+                android:layout_centerVertical="true"
+
+                android:id="@+id/img_yellow"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="你懂的"
+                android:textSize="20sp"
+
+                android:layout_toRightOf="@+id/img_yellow"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+
+                android:textColor="#454545"
+                android:id="@+id/text_yellow"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="免费赚福利"
+                android:textSize="15sp"
+                android:layout_below="@+id/text_yellow"
+                android:layout_toRightOf="@+id/img_yellow"
+
+                android:textColor="#A1A1A1"
+                android:layout_marginLeft="10dp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_arrow_r"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F1F1F1"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:src="@drawable/img_wdj"
+                android:layout_centerVertical="true"
+
+                android:id="@+id/img_wdj"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="精品推荐"
+                android:textSize="20sp"
+
+                android:layout_toRightOf="@+id/img_wdj"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+
+                android:textColor="#454545"
+                android:id="@+id/text_wdj"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="史上最好玩的游戏"
+                android:textSize="15sp"
+                android:layout_below="@+id/text_wdj"
+                android:layout_toRightOf="@+id/img_wdj"
+
+                android:textColor="#A1A1A1"
+                android:layout_marginLeft="10dp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_arrow_r"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F1F1F1"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:src="@drawable/img_xb_weidian"
+                android:layout_centerVertical="true"
+
+                android:id="@+id/img_godsmile"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="店神微笑"
+                android:textSize="20sp"
+
+                android:layout_toRightOf="@+id/img_godsmile"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+
+                android:textColor="#454545"
+                android:id="@+id/text_godsmile"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="限时抢购送会员"
+                android:textSize="15sp"
+                android:layout_below="@+id/text_godsmile"
+                android:layout_toRightOf="@+id/img_godsmile"
+
+                android:textColor="#A1A1A1"
+                android:layout_marginLeft="10dp"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_arrow_r"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                />
+        </RelativeLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:background="#F1F1F1"
+        />
+    </LinearLayout>
+</LinearLayout>
