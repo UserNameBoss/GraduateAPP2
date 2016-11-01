@@ -12,6 +12,7 @@
 
         <ImageView
             android:id="@+id/imageView_add"
+            android:onClick="add"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
