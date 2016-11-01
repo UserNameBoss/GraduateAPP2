@@ -1,6 +1,8 @@
 package com.example.yangxiaolong.graduateapp.frament;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -160,4 +163,6 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
         super.onDestroy();
         oldPosition=0;
     }
+
+
 }

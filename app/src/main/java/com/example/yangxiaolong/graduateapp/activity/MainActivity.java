@@ -1,5 +1,7 @@
 package com.example.yangxiaolong.graduateapp.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -163,5 +165,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         public int getCount() {
             return fragments.length;
         }
+    }
+
+    /**
+     * 点击add按钮进行投稿审稿
+     * @param view
+     */
+    public void add(View view){
+       // AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // 自定义视图
+       // View customView = getLayoutInflater().inflate(R.layout.custom_add_view, null);
+        //builder.setView(customView);
+        //builder.show();
+        Dialog dialog = new Dialog(this,R.style.dialog);
+        dialog.setContentView(R.layout.custom_add_view);
+        dialog.setCancelable(true);
+        dialog.show();
     }
 }
