@@ -126,22 +126,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void getBackGound0(int preId){
         switch (preId){
             case R.id.linearLayout_hot:
-                textView_hot.setTextColor(Color.WHITE);
+                textView_hot.setTextColor(Color.BLACK);
                 imageView_hot.setImageResource(R.drawable.tab_xb_0);
                 imageView_hot_line.setBackgroundColor(Color.WHITE);
                 break;
             case R.id.linearLayout_find:
-                textView_find.setTextColor(Color.WHITE);
+                textView_find.setTextColor(Color.BLACK);
                 imageView_find.setImageResource(R.drawable.tab_discover_0);
                 imageView_find_line.setBackgroundColor(Color.WHITE);
                 break;
             case R.id.linearLayout_messige:
-                textView_message.setTextColor(Color.WHITE);
+                textView_message.setTextColor(Color.BLACK);
                 imageView_message.setImageResource(R.drawable.tab_message_0);
                 imageView_message_line.setBackgroundColor(Color.WHITE);
                 break;
             case R.id.linearLayout_user:
-                textView_user.setTextSize(Color.WHITE);
+                textView_user.setTextSize(Color.BLACK);
                 imageView_user.setImageResource(R.drawable.tab_user_center_0);
                 imageView_user_line.setBackgroundColor(Color.WHITE);
                 break;
