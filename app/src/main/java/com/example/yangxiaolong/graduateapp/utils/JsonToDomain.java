@@ -1,6 +1,10 @@
 package com.example.yangxiaolong.graduateapp.utils;
 
+import android.support.annotation.NonNull;
+
+import com.example.yangxiaolong.graduateapp.domain.Audio;
 import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
+import com.example.yangxiaolong.graduateapp.domain.Pic;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +46,7 @@ public class JsonToDomain {
         List<ListUserContent> data=new ArrayList<>();
         try {
             JSONArray jsonArray=new JSONArray(json);
+
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject jsonObject=jsonArray.getJSONObject(i);
                 int articleId=jsonObject.getInt("ArticleId");
@@ -56,8 +61,31 @@ public class JsonToDomain {
                 int userId=jsonObject.getInt("UserId");
                 int userLevel=jsonObject.getInt("UserLevel");
                 String userNick=jsonObject.getString("UserNick");
-                ListUserContent listUserContent=new ListUserContent(articleId,categoryId,comments,content,title,favorites,goods,hits,userIcon,
-                        userId,userLevel,userNick);
+                int shares=jsonObject.getInt("Shares");
+                int picCount=jsonObject.getInt("PicCount");
+                ListUserContent listUserContent=null;
+                System.out.println("========Json======categoryId="+categoryId);
+                if(categoryId==29){
+                    System.out.println("============解析声音===============");
+                    System.out.println("===========jsonArray.length="+jsonArray.length());
+                     Pic pic=getPic(jsonObject);
+                     JSONObject jsonObject1=jsonObject.getJSONObject("Audio");
+                     int duration=jsonObject1.getInt("Duration");
+                     String audiop=jsonObject1.getString("Audio");
+                     Audio audio=new Audio(audiop,duration);
+                     listUserContent=new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
+                            userId, userLevel, userNick, shares,pic,picCount,audio);
+                }else {
+                    if(picCount==0) {
+                        listUserContent = new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
+                                userId, userLevel, userNick, shares);
+                    }else{
+                        Pic pic = getPic(jsonObject);
+                        listUserContent=new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
+                                userId, userLevel, userNick, shares,pic,picCount);
+                    }
+                }
+
                 data.add(listUserContent);
 
             }
@@ -66,5 +94,14 @@ public class JsonToDomain {
         }
 
         return data;
+    }
+
+    @NonNull
+    private static Pic getPic(JSONObject jsonObject) throws JSONException {
+        JSONObject jsonObject1=jsonObject.getJSONObject("Pic");
+        int height=jsonObject1.getInt("Height");
+        String url=jsonObject1.getString("Url");
+        int width=jsonObject1.getInt("Width");
+        return new Pic(height,url,width);
     }
 }

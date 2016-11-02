@@ -28,9 +28,52 @@ public class ListUserContent {
     private int userLevel;
     //用户名
     private String userNick;
+    //分享的数目
+    private int shares;
+    //图片资源
+    private Pic pic;
+    //图片数量
+    private int picCount;
 
+    //音频文件
+    private Audio audio;
 
-    public ListUserContent(int categoryId, int articleId, int comments, String content, String title, int favorites, int goods, int hits, String userIcon, int userId, int userLevel, String userNick) {
+    public ListUserContent(int articleId, int categoryId, int comments, String content, String title, int favorites, int goods, int hits, String userIcon, int userId, int userLevel, String userNick, int shares, Pic pic, int picCount, Audio audio) {
+        this.articleId = articleId;
+        this.categoryId = categoryId;
+        this.comments = comments;
+        this.content = content;
+        this.title = title;
+        this.favorites = favorites;
+        this.goods = goods;
+        this.hits = hits;
+        this.userIcon = userIcon;
+        this.userId = userId;
+        this.userLevel = userLevel;
+        this.userNick = userNick;
+        this.shares = shares;
+        this.pic = pic;
+        this.picCount = picCount;
+        this.audio = audio;
+    }
+
+    public Audio getAudio() {
+        return audio;
+    }
+
+    public void setAudio(Audio audio) {
+        this.audio = audio;
+    }
+
+    public int getShares() {
+        return shares;
+    }
+
+    public void setShares(int shares) {
+        this.shares = shares;
+    }
+
+    public ListUserContent(int articleId,int categoryId, int comments, String content, String title, int favorites, int goods, int hits, String userIcon, int userId, int userLevel, String userNick,int shares) {
         this.categoryId = categoryId;
         this.articleId = articleId;
         this.comments = comments;
@@ -43,6 +86,41 @@ public class ListUserContent {
         this.userId = userId;
         this.userLevel = userLevel;
         this.userNick = userNick;
+        this.shares=shares;
+    }
+
+    public ListUserContent(int articleId, int categoryId, int comments, String content, String title, int favorites, int goods, int hits, String userIcon, int userId, int userLevel, String userNick, int shares, Pic pic, int picCount) {
+        this.articleId = articleId;
+        this.categoryId = categoryId;
+        this.comments = comments;
+        this.content = content;
+        this.title = title;
+        this.favorites = favorites;
+        this.goods = goods;
+        this.hits = hits;
+        this.userIcon = userIcon;
+        this.userId = userId;
+        this.userLevel = userLevel;
+        this.userNick = userNick;
+        this.shares = shares;
+        this.pic = pic;
+        this.picCount = picCount;
+    }
+
+    public Pic getPic() {
+        return pic;
+    }
+
+    public void setPic(Pic pic) {
+        this.pic = pic;
+    }
+
+    public int getPicCount() {
+        return picCount;
+    }
+
+    public void setPicCount(int picCount) {
+        this.picCount = picCount;
     }
 
     public int getArticleId() {
@@ -156,6 +234,10 @@ public class ListUserContent {
                 ", userId=" + userId +
                 ", userLevel=" + userLevel +
                 ", userNick='" + userNick + '\'' +
+                ", shares=" + shares +
+                ", pic=" + pic +
+                ", picCount=" + picCount +
+                ", audio=" + audio +
                 '}';
     }
 }
