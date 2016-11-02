@@ -101,7 +101,7 @@ public class Fragment_find extends Fragment implements OnClickListener{
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
+        if(isVisibleToUser&&this.scrollView!=null){
             this.scrollView.scrollTo(0,0);
         }
     }

@@ -62,7 +62,11 @@
         ]
     },
     {
+<<<<<<< Updated upstream
         "outputFile": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-ar\\values-ar.xml",
+=======
+        "outputFile": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-ar\\values-ar.xml",
+>>>>>>> Stashed changes
         "map": [
             {
                 "to": {
@@ -73,7 +77,11 @@
                     "endOffset": 119
                 },
                 "from": {
+<<<<<<< Updated upstream
                     "file": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
+=======
+                    "file": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
+>>>>>>> Stashed changes
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -92,7 +100,11 @@
                     "endOffset": 187
                 },
                 "from": {
+<<<<<<< Updated upstream
                     "file": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
+=======
+                    "file": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
+>>>>>>> Stashed changes
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -111,7 +123,11 @@
                     "endOffset": 259
                 },
                 "from": {
+<<<<<<< Updated upstream
                     "file": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
+=======
+                    "file": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
+>>>>>>> Stashed changes
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
