@@ -54,9 +54,9 @@
         android:orientation="vertical"
         >
         <RelativeLayout
+            android:id="@+id/RelativeLayout_MyMessage"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-
             >
             <ImageView
                 android:layout_width="50dp"
@@ -94,6 +94,7 @@
             android:background="#F1F1F1"/>
 
         <RelativeLayout
+            android:id="@+id/RelativeLayout_Comment_Collect"
             android:layout_width="match_parent"
             android:layout_height="70dp"
 
@@ -129,6 +130,7 @@
                 />
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/RelativeLayout_feedback"
             android:layout_width="match_parent"
             android:layout_height="70dp"
 
