@@ -84,9 +84,7 @@
         android:id="@+id/ViewPager_Comment_Collect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </android.support.v4.view.ViewPager>
-
 
 
 </LinearLayout>
