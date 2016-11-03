@@ -16,7 +16,7 @@
         android:orientation="vertical"
         >
         <!---->
-       <RelativeLayout
+        <RelativeLayout
            android:layout_width="match_parent"
            android:layout_height="270dp"
            android:background="@drawable/night_user_center_bg"
