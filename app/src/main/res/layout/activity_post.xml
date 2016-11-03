@@ -34,7 +34,8 @@
             android:text="提交"
             android:gravity="center_vertical"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:id="@+id/textView_post"/>
     </LinearLayout>
 
 
@@ -57,7 +58,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:orientation="horizontal"
             >
 
@@ -70,22 +71,26 @@
                 android:layout_gravity="bottom"
                  />
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
+                android:gravity="center"
                 android:orientation="vertical">
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:background="#dcdada"
+                    android:layout_marginRight="22dp"
                     android:src="@drawable/btn_take_photo"
                     android:id="@+id/imageButton_take_photo" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:layout_marginRight="18dp"
                     android:textSize="15sp"
-                    android:text="上传图片"/>
+                    android:text="上传图片"
+                    android:id="@+id/textView_uploadImage"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -96,7 +101,7 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:background="#FFD6D1D1"
+        android:background="#dcdada"
 
         >
 
@@ -105,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
+            android:background="#dcdada"
             android:id="@+id/imageButton_tab_pic"
             android:src="@drawable/btn_tab_pic_0"/>
 
@@ -113,6 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#dcdada"
             android:id="@+id/imageButton_subject"
             android:src="@drawable/btn_subject_0"/>
 
@@ -120,6 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#dcdada"
             android:id="@+id/imageButton_tab_audio"
             android:src="@drawable/btn_tab_audio_0"/>
     </LinearLayout>
