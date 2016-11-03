@@ -1,12 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.yangxiaolong.graduateapp.activity.AuditActivity">
+    android:orientation="vertical"
+    >
+    <!--消息-->
 
-</RelativeLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/editText_article"
+        android:gravity="top"
+        android:background="@null"
+        android:hint="好东西要一起分享，把你的压箱底的笑料拿出来，供广大霸友们一起吐槽把！
+
+须知：投稿由众霸友审核，通过后即可推荐到首页~
+提醒霸友们严禁灌水、发广告及色情政治、敏感等内容，违者作永久封号处理~
+            "
+
+        />
+
+
+</LinearLayout>
