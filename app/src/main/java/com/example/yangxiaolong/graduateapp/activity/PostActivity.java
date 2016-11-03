@@ -81,7 +81,8 @@ public class PostActivity extends Activity implements View.OnClickListener {
 
 
     @OnClick({R.id.imageButton_back, R.id.imageButton_take_photo, R.id.imageButton_tab_pic,
-            R.id.imageButton_subject, R.id.imageButton_tab_audio,R.id.textView_post})
+            R.id.imageButton_subject, R.id.imageButton_tab_audio,R.id.textView_post,
+            })
     public void onClick(View view) {
         Intent intent = null;
         switch (view.getId()) {

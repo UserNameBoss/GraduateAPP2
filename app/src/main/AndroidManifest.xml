@@ -3,6 +3,8 @@
     package="com.example.yangxiaolong.graduateapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -84,7 +86,7 @@
         <activity android:name=".activity.My_Login_Activity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
             ></activity>
-        <activity android:name=".activity.Feedback_Activity" />
+
         <activity android:name=".activity.PostActivity" />
         <activity android:name=".activity.AuditActivity" />
         <activity android:name=".activity.SubjectActivity"></activity>
