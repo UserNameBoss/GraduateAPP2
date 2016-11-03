@@ -22,6 +22,8 @@
         <activity android:name=".activity.MessageCenter_Activity" />
         <activity android:name=".activity.Comment_Collect_Activity" />
         <activity android:name=".activity.Feedback_Activity"></activity>
+        <activity android:name=".activity.PostActivity"></activity>
+        <activity android:name=".activity.AuditActivity"></activity>
     </application>
 
 </manifest>
