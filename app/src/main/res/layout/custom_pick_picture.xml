@@ -33,8 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="立即拍摄"
+
             android:layout_marginLeft="20dp"
-            android:textSize="20sp"
+
             android:layout_weight="1"
             android:background="@drawable/buttonstyle"
             android:id="@+id/button_takePhoto" />
@@ -44,9 +45,9 @@
             android:layout_height="wrap_content"
             android:text="从相册选择"
             android:layout_marginRight="20dp"
-            android:textSize="20sp"
+
             android:layout_weight="1"
-            android:layout_marginLeft="80dp"
+            android:layout_marginLeft="40dp"
             android:background="@drawable/buttonstyle"
             android:id="@+id/button_pick" />
     </LinearLayout>
