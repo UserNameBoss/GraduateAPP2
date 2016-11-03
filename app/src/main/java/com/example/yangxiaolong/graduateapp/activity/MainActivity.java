@@ -2,6 +2,7 @@ package com.example.yangxiaolong.graduateapp.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +40,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private TextView textView_hot,textView_find,textView_message,textView_user;
     private ImageView imageView_hot_line,imageView_find_line,imageView_message_line,imageView_user_line;
     private int preId;
+    private Dialog dialog;
     private Fragment[] fragments={new Fragment_Hot(),new Fragment_find(),new Fragment_message(),new Fragment_my()};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+         Intent intent=null;
         int id=v.getId();
         switch (id){
             case R.id.linearLayout_hot:
@@ -97,6 +104,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 getBackGound1(id);
                 preId=R.id.linearLayout_user;
                 viewPager.setCurrentItem(3);
+                break;
+
+            case R.id.imageButton_post:
+                 intent =new Intent(this,PostActivity.class);
+                startActivity(intent);
+                break;
+            case  R.id.imageButton_audit:
+                 intent =new Intent(this,AuditActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -178,9 +194,27 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
        // View customView = getLayoutInflater().inflate(R.layout.custom_add_view, null);
         //builder.setView(customView);
         //builder.show();
-        Dialog dialog = new Dialog(this,R.style.dialog);
+        dialog = new Dialog(this,R.style.dialog);
         dialog.setContentView(R.layout.custom_add_view);
         dialog.setCancelable(true);
         dialog.show();
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        //params.width = config.getScreenWidth();  //设置对话框的宽度为屏幕宽 （此处得到的是我一开始获得并存放起来的屏幕宽）
+        window.setAttributes(params);//此句代码一定要放在show()后面，否则不起作用
+        dialog.setCanceledOnTouchOutside(true);
+        ImageButton imageButton_post = (ImageButton) window.findViewById(R.id.imageButton_post);
+        ImageButton imageButton_audit = (ImageButton) window.findViewById(R.id.imageButton_audit);
+        imageButton_post.setOnClickListener(this);
+        imageButton_audit.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (dialog!=null){
+            dialog.dismiss();
+        }
     }
 }
