@@ -40,7 +40,7 @@
            android:layout_marginTop="20dp"
            android:gravity="center_vertical"
            android:id="@+id/linearLayout_userInformation"
-
+           android:visibility="gone"
            >
            <ImageView
                android:layout_width="wrap_content"
@@ -79,16 +79,17 @@
        </LinearLayout>
            <!--点击登陆按钮，登陆后隐藏-->
            <Button
-               android:layout_width="wrap_content"
-               android:layout_height="50dp"
-
+               android:layout_width="80dp"
+               android:layout_height="35dp"
                android:layout_below="@+id/circleImageView_userImg"
                android:layout_centerHorizontal="true"
                android:text="立即登陆"
                android:textSize="15dp"
-               android:layout_marginTop="20dp"
+               android:layout_marginTop="10dp"
                android:id="@+id/btn_login"
-               android:visibility="gone"
+               android:background="@drawable/btn_login"
+               android:textColor="@android:color/white"
+               android:gravity="center"
                />
            <!--用户粉丝关注投稿布局-->
        <LinearLayout
@@ -625,7 +626,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:id="@+id/linearLayout_login_userID"
-                android:visibility="invisible"
+                android:visibility="gone"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -633,7 +634,7 @@
                     android:text="霸号："
                     android:textSize="13dp"
                     android:textColor="@android:color/white"
-
+                    android:id="@+id/textView_bahao"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -650,6 +651,7 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_height="match_parent">
+            <!--未登录时隐藏-->
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -661,6 +663,7 @@
                 android:paddingLeft="70dp"
                 android:id="@+id/textView_login_edit"
                 android:clickable="true"
+                android:visibility="gone"
                 />
 
         </LinearLayout>

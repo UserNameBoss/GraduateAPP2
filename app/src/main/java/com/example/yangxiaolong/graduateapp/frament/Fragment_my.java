@@ -28,9 +28,6 @@ import com.example.yangxiaolong.graduateapp.activity.My_Task_Activity;
 import com.example.yangxiaolong.graduateapp.activity.My_Vip_Activity;
 import com.example.yangxiaolong.graduateapp.activity.My_Yellow_Activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -41,7 +38,8 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
  * A simple {@link Fragment} subclass.
  */
 public class Fragment_my extends Fragment {
-
+    private final int REQUEST_CODE = 100;
+    private final int RESPONSE_CODE = 200;
 
     @BindView(R.id.circleImageView_userImg)
     CircleImageView circleImageViewUserImg;
@@ -87,6 +85,11 @@ public class Fragment_my extends Fragment {
     RelativeLayout relativeLayoutSeven;
     @BindView(R.id.relativeLayout_eight)
     RelativeLayout relativeLayoutEight;
+    @BindView(R.id.linearLayout_userInformation)
+    LinearLayout linearLayoutUserInformation;
+    @BindView(R.id.textView_bahao)
+    TextView textView_bahao;
+
     private ObservableScrollView scrollView_my;
     private LinearLayout linearLayout;
     private ImageView imageView_changeStyle;
@@ -108,22 +111,22 @@ public class Fragment_my extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_my, container, false);
         //使用黄油小刀
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
         this.scrollView_my = (ObservableScrollView) view.findViewById(R.id.scrollView_my);
         this.linearLayout = (LinearLayout) view.findViewById(R.id.linearLayout_my_titleBar);
-        this.imageView_changeStyle=(ImageView)view.findViewById(R.id.img_changeStyle) ;
+        this.imageView_changeStyle = (ImageView) view.findViewById(R.id.img_changeStyle);
         this.imgStatu();
 
         this.imageView_changeStyle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isChecked){
+                if (!isChecked) {
                     imageView_changeStyle.setImageResource(R.drawable.bg_chkbox_new_1);
-                    isChecked=true;
-                }else{
+                    isChecked = true;
+                } else {
                     imageView_changeStyle.setImageResource(R.drawable.bg_chkbox_new_0);
-                    isChecked=false;
+                    isChecked = false;
                 }
             }
         });
@@ -168,7 +171,7 @@ public class Fragment_my extends Fragment {
                 Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_login:
-                Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
+                this.loginAndShow();
                 break;
             case R.id.textView_userFansNumber:
                 Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
@@ -187,35 +190,36 @@ public class Fragment_my extends Fragment {
                 break;
         }
     }
-   private void imgStatu(){
-       if(this.imageView_changeStyle!=null){
-           if(isChecked){
-               imageView_changeStyle.setImageResource(R.drawable.bg_chkbox_new_1);
-           }
-       }
-   }
+
+    private void imgStatu() {
+        if (this.imageView_changeStyle != null) {
+            if (isChecked) {
+                imageView_changeStyle.setImageResource(R.drawable.bg_chkbox_new_1);
+            }
+        }
+    }
 
     @OnClick({R.id.relativeLayout_one, R.id.relativeLayout_two, R.id.relativeLayout_three, R.id.relativeLayout_four, R.id.relativeLayout_five, R.id.relativeLayout_six, R.id.relativeLayout_seven, R.id.relativeLayout_eight})
     public void onClickItem(View view) {
         switch (view.getId()) {
             case R.id.relativeLayout_one:
-                Intent intentone=new Intent(getActivity(),My_Gold_Activity.class);
+                Intent intentone = new Intent(getActivity(), My_Gold_Activity.class);
                 startActivity(intentone);
                 break;
             case R.id.relativeLayout_two:
-                Intent intenttwo=new Intent(getActivity(),My_Vip_Activity.class);
+                Intent intenttwo = new Intent(getActivity(), My_Vip_Activity.class);
                 startActivity(intenttwo);
                 break;
             case R.id.relativeLayout_three:
-                Intent intentthree=new Intent(getActivity(), My_Task_Activity.class);
+                Intent intentthree = new Intent(getActivity(), My_Task_Activity.class);
                 startActivity(intentthree);
                 break;
             case R.id.relativeLayout_four:
-                Intent intentfour=new Intent(getActivity(),My_Yellow_Activity.class);
+                Intent intentfour = new Intent(getActivity(), My_Yellow_Activity.class);
                 startActivity(intentfour);
                 break;
             case R.id.relativeLayout_five:
-                Intent intentfive=new Intent(getActivity(),My_Friends_Activity.class);
+                Intent intentfive = new Intent(getActivity(), My_Friends_Activity.class);
                 startActivity(intentfive);
                 break;
             case R.id.relativeLayout_six:
@@ -224,7 +228,7 @@ public class Fragment_my extends Fragment {
                 showShare();
                 break;
             case R.id.relativeLayout_eight:
-                Intent intenteight=new Intent(getActivity(), My_Settins_Activity.class);
+                Intent intenteight = new Intent(getActivity(), My_Settins_Activity.class);
                 startActivity(intenteight);
                 break;
         }
@@ -255,5 +259,42 @@ public class Fragment_my extends Fragment {
 
 // 启动分享GUI
         oks.show(getActivity());
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESPONSE_CODE) {
+
+            }
+        }
+    }
+
+    private void loginAndShow(){
+        //登录
+                /*Intent intent=new Intent(getActivity(), My_Login_Activity.class);
+                startActivityForResult(intent,REQUEST_CODE);*/
+        int visibility=this.linearLayoutUserInformation.getVisibility();
+        if(visibility==View.GONE){
+            this.linearLayoutUserInformation.setVisibility(View.VISIBLE);
+        }else {
+            this.linearLayoutUserInformation.setVisibility(View.GONE);
+        }
+        if(this.btnLogin.getVisibility()==View.VISIBLE){
+            this.btnLogin.setVisibility(View.GONE);
+        }else {
+            this.btnLogin.setVisibility(View.VISIBLE);
+        }
+        if(this.textViewLoginEdit.getVisibility()==View.GONE){
+            this.textViewLoginEdit.setVisibility(View.VISIBLE);
+        }else {
+            this.textViewLoginEdit.setVisibility(View.GONE);
+        }
+       if(this.linearLayoutLoginUserID.getVisibility()==View.GONE){
+           this.linearLayoutLoginUserID.setVisibility(View.VISIBLE);
+       }else {
+           this.linearLayoutLoginUserID.setVisibility(View.GONE);
+       }
     }
 }
