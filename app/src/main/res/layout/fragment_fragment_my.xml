@@ -472,19 +472,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="70dp"
+                android:layout_marginRight="20dp"
                 android:id="@+id/img_changeStyle"
                 android:src="@drawable/bg_chkbox_new_0"
                 android:adjustViewBounds="true"
                 android:maxWidth="50dp"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_arrow_r"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="20dp"
                 />
         </RelativeLayout>
         <!--间隔线-->
