@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "E:\\yangxiaolong\\AndroidStudioProjects\\GraduateAPP\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-ar\\values-ar.xml",
+        "outputFile": "D:\\GraduateAPP2\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-ar\\values-ar.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 119
                 },
                 "from": {
-                    "file": "E:\\yangxiaolong\\AndroidStudioProjects\\GraduateAPP\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
+                    "file": "D:\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 187
                 },
                 "from": {
-                    "file": "E:\\yangxiaolong\\AndroidStudioProjects\\GraduateAPP\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
+                    "file": "D:\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -49,85 +49,7 @@
                     "endOffset": 259
                 },
                 "from": {
-                    "file": "E:\\yangxiaolong\\AndroidStudioProjects\\GraduateAPP\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 192,
-                        "endColumn": 71,
-                        "endOffset": 259
-                    }
-                }
-            }
-        ]
-    },
-    {
-<<<<<<< Updated upstream
-        "outputFile": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-ar\\values-ar.xml",
-=======
-        "outputFile": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-ar\\values-ar.xml",
->>>>>>> Stashed changes
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 68,
-                    "endOffset": 119
-                },
-                "from": {
-<<<<<<< Updated upstream
-                    "file": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
-=======
-                    "file": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
->>>>>>> Stashed changes
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 68,
-                        "endOffset": 119
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 3,
-                    "startColumn": 4,
-                    "startOffset": 124,
-                    "endColumn": 67,
-                    "endOffset": 187
-                },
-                "from": {
-<<<<<<< Updated upstream
-                    "file": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
-=======
-                    "file": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
->>>>>>> Stashed changes
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 124,
-                        "endColumn": 67,
-                        "endOffset": 187
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 4,
-                    "startColumn": 4,
-                    "startOffset": 192,
-                    "endColumn": 71,
-                    "endOffset": 259
-                },
-                "from": {
-<<<<<<< Updated upstream
-                    "file": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
-=======
-                    "file": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
->>>>>>> Stashed changes
+                    "file": "D:\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-ar\\values-ar.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
