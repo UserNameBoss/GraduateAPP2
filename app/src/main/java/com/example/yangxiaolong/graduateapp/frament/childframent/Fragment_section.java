@@ -51,10 +51,10 @@ public class Fragment_section extends Fragment {
             @Override
             public void getMessage(String message) {
 
-                System.out.println("=================message="+message);
+
                 data= JsonToDomain.getData(message);
                 System.out.println("=================data.size="+data.size());
-                pullToRefreshListView.setAdapter(new MyListViewAdapter_Text(getContext(),data));
+                pullToRefreshListView.setAdapter(new MyListViewAdapter_Text(getContext(),data,1));
             }
         });
 

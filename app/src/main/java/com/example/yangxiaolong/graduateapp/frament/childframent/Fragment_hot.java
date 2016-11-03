@@ -1,12 +1,16 @@
 package com.example.yangxiaolong.graduateapp.frament.childframent;
 
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.yangxiaolong.graduateapp.R;
 import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
@@ -30,7 +34,11 @@ public class Fragment_hot extends Fragment {
     private NetWorkListUserContent.GetResultCallback getResultCallback;
     private NetWorkListUserContent netWorkListUserContent;
     private List<ListUserContent> data;
+    private LocalBroadcastManager localBroadcastManager;
+    private IntentFilter intentFilter=new IntentFilter("Progress");
+    private TextView textView_current;
     String afterDate="1478003200000";
+
 
     public Fragment_hot(){
         long timeMs= GETCurrentTime.getTimeMS();
@@ -39,21 +47,18 @@ public class Fragment_hot extends Fragment {
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_hot02, container, false);
         pullToRefreshListView= (PullToRefreshListView) view.findViewById(R.id.childListView_hot);
-
         getResultCallback=(new NetWorkListUserContent.GetResultCallback() {
             @Override
             public void getMessage(String message) {
 
-                System.out.println("=================message="+message);
                 data= JsonToDomain.getData(message);
                 System.out.println("=================data.size="+data.size());
-                pullToRefreshListView.setAdapter(new MyListViewAdapter_Text(getContext(),data));
+                pullToRefreshListView.setAdapter(new MyListViewAdapter_Text(getContext(),data,1));
             }
         });
 
@@ -62,11 +67,7 @@ public class Fragment_hot extends Fragment {
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                long timeMs= GETCurrentTime.getTimeMS();
-                int a=03200000+10000000;
-                afterDate=afterDate.substring(5)+a;
-                pathKey="sign=9438347199880E01F3C"+timeMs+"&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&allowRandom=1";
-                NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
+
             }
 
             @Override
@@ -74,10 +75,19 @@ public class Fragment_hot extends Fragment {
 
             }
         });
+
+        pullToRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
         return view;
     }
 
 
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 }

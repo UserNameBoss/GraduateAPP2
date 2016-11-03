@@ -1,7 +1,10 @@
 package com.example.yangxiaolong.graduateapp.utils;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,7 @@ import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
 import com.example.yangxiaolong.graduateapp.domain.Pic;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,12 +38,19 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
     private Context context;
     private LayoutInflater layoutInflater;
     private LocalBroadcastManager localBroadcastManager;
+    private static ProgressBar progressBar;
+    private static TextView textView_currentTime;
+    private IntentFilter intentFilter=new IntentFilter("Progress");
+    private static CheckBox checkBox;
+    private int flag;
 
-    public MyListViewAdapter_Text(Context context, List<ListUserContent> data) {
+    public MyListViewAdapter_Text(Context context, List<ListUserContent> data,int Flag) {
         this.data = data;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
+        this.flag=Flag;
         localBroadcastManager=LocalBroadcastManager.getInstance(context);
+        localBroadcastManager.registerReceiver(new ProgressBroadcastReciver(),intentFilter);
     }
 
 
@@ -70,37 +81,48 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
         } else {
             myViewHolder = (ViewHolder) convertView.getTag();
         }
-        System.out.println("=============list==="+listUserContent);
         if(listUserContent!=null) {
             if (listUserContent.getCategoryId() == 29) {
-                System.out.println("==========Adapter.=====listUserContent.getCategoryId=" + listUserContent.getCategoryId());
                 myViewHolder.textView_hits.setText(String.valueOf(listUserContent.getHits()));
                 Pic pic = listUserContent.getPic();
-                int height = pic.getHeight();
-                String url = pic.getUrl();
-                int width = pic.getWidth();
-                myViewHolder.textView_title.setText(listUserContent.getTitle());
-                myViewHolder.textView_title.setVisibility(View.VISIBLE);
-                Picasso.with(context).load(url).resize(width, height).centerCrop().into(myViewHolder.imageView_content);
-                myViewHolder.imageView_content.setVisibility(View.VISIBLE);
-                myViewHolder.textView_content.setVisibility(View.GONE);
-                myViewHolder.frameLayout_playSound.setVisibility(View.VISIBLE);
-
-                myViewHolder.imageView_play.setTag(listUserContent.getAudio().getAudio());
-            }else{
-                if (listUserContent.getPicCount() == 0) {
-                    myViewHolder.textView_content.setText(listUserContent.getContent());
-                    myViewHolder.textView_title.setVisibility(View.GONE);
-                    myViewHolder.imageView_content.setVisibility(View.VISIBLE);
-                    myViewHolder.frameLayout_playSound.setVisibility(View.GONE);
-                } else {
-                    Pic pic = listUserContent.getPic();
+                if(pic!=null) {
                     int height = pic.getHeight();
                     String url = pic.getUrl();
                     int width = pic.getWidth();
+                    Picasso.with(context).load(url).resize(width, height).centerCrop().into(myViewHolder.imageView_content);
+
+                }else{
+                    myViewHolder.imageView_content.setImageResource(R.mipmap.ic_launcher);
+                }
+                myViewHolder.textView_title.setText(listUserContent.getTitle());
+                myViewHolder.textView_title.setVisibility(View.VISIBLE);
+                myViewHolder.imageView_content.setVisibility(View.VISIBLE);
+                myViewHolder.textView_content.setVisibility(View.GONE);
+                myViewHolder.frameLayout_playSound.setVisibility(View.VISIBLE);
+                myViewHolder.textView_currentTime.setText(FormatTiem.formatTime(listUserContent.getAudio().getDuration()*1000));
+                myViewHolder.textView_audioPath.setText(String.valueOf(listUserContent.getAudio().getAudio()));
+                myViewHolder.progressBar.setMax(listUserContent.getAudio().getDuration()*1000);
+                myViewHolder.imageView_play.setTag(myViewHolder);
+
+            }else{
+                if (listUserContent.getPicCount() == 0) {
+                    myViewHolder.textView_content.setText(listUserContent.getContent());
+                    myViewHolder.textView_content.setVisibility(View.VISIBLE);
+                    myViewHolder.textView_title.setVisibility(View.GONE);
+                    myViewHolder.imageView_content.setVisibility(View.GONE);
+                    myViewHolder.frameLayout_playSound.setVisibility(View.GONE);
+                } else {
+                    Pic pic = listUserContent.getPic();
+                    if(pic!=null) {
+                        int height = pic.getHeight();
+                        String url = pic.getUrl();
+                        int width = pic.getWidth();
+                        Picasso.with(context).load(url).resize(width, height).centerCrop().into(myViewHolder.imageView_content);
+                    }else{
+                        myViewHolder.imageView_content.setImageResource(R.mipmap.ic_launcher);
+                    }
                     myViewHolder.textView_title.setText(listUserContent.getTitle());
                     myViewHolder.textView_title.setVisibility(View.VISIBLE);
-                    Picasso.with(context).load(url).resize(width, height).centerCrop().into(myViewHolder.imageView_content);
                     myViewHolder.imageView_content.setVisibility(View.VISIBLE);
                     myViewHolder.textView_content.setVisibility(View.GONE);
                     myViewHolder.frameLayout_playSound.setVisibility(View.GONE);
@@ -113,8 +135,12 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
             myViewHolder.textView_goodCount.setText(String.valueOf(listUserContent.getGoods()));
             myViewHolder.textView_favoriteCount.setText(String.valueOf(listUserContent.getFavorites()));
             myViewHolder.textView_shareCount.setText(String.valueOf(listUserContent.getShares()));
+            if(flag==2){
+                myViewHolder.textView_type.setText("#"+listUserContent.getSubject()+"#");
+                myViewHolder.textView_type.setVisibility(View.VISIBLE);
+                myViewHolder.textView_type.setTextColor(Color.RED);
+            }
         }
-
         return convertView;
     }
 
@@ -124,9 +150,20 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
         switch (id){
             case R.id.imageView_play:
                 Intent intent=new Intent("audio");
-                CheckBox checkBox= (CheckBox) v;
-                String path= (String) checkBox.getTag();
-                intent.putExtra("path",path);
+                checkBox= (CheckBox) v;
+                if(checkBox.isChecked()) {
+                    ViewHolder viewHolder = (ViewHolder) checkBox.getTag();
+                    intent.putExtra("path", viewHolder.textView_audioPath.getText().toString());
+                    intent.putExtra("playStart",true);
+                    viewHolder.progressBar.setVisibility(View.VISIBLE);
+                    this.progressBar=viewHolder.progressBar;
+                    System.out.println("===========progressBar.id="+progressBar.getId());
+                    this.textView_currentTime=viewHolder.textView_currentTime;
+
+                }else{
+                    intent.putExtra("playStart",false);
+                }
+                localBroadcastManager.sendBroadcast(intent);
                 System.out.println("==========点击了==============");
         }
 
@@ -168,48 +205,40 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
         @BindView(R.id.imageView_play)
         CheckBox imageView_play;
         @BindView(R.id.textView_current)
-        TextView textView_current;
+        TextView textView_currentTime;
         @BindView(R.id.textView_hits)
         TextView textView_hits;
-
+        @BindView(R.id.textVeiw_audioPath)
+        TextView textView_audioPath;
+        @BindView(R.id.textView_type)
+        TextView textView_type;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
 
 
-//    class MyViewHolder{
-//        //头像
-//        ImageView circleImageView_img;
-//        //等级
-//        ImageView imageView_msg;
-//        //点赞图标
-//        ImageView imageButton_good;
-//        //评论图标
-//        ImageView imageButton_comment;
-//        //分享图标
-//        ImageView imageButton_share;
-//        //收藏图标
-//        ImageView imageView_favorite;
-//        //用户名
-//        TextView textView_name;
-//        //点赞数目
-//        TextView textView_goodCount;
-//        //评论数目
-//        TextView textView_commentCount;
-//        //分享数目
-//        TextView textView_shareCount;
-//        //收藏数目
-//        TextView textView_favoriteCount;
-//        //内容
-//        TextView textView_content;
-//
-//
-//
-//        public MyViewHolder(View view){
-//
-//        }
-//    }
 
+    class ProgressBroadcastReciver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean isStop=intent.getBooleanExtra("isStop",true);
+            if(!isStop) {
+                int progress = intent.getIntExtra("progress", 0);
+                System.out.println("=========Reciver.progressBarid=" + progressBar.getId());
+                progressBar.setProgress(progress);
+                textView_currentTime.setText(FormatTiem.formatTime(progress));
+            }else{
+                checkBox.setChecked(false);
+            }
+        }
+    }
 
+    public List<String> getPathIcon(){
+        List<String> list=new ArrayList<>();
+        for(int i=0;i<15;i++){
+            list.add(data.get(i).getUserIcon());
+        }
+        return list;
+    }
 }

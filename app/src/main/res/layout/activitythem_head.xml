@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:id="@+id/viewPager_them">
+    </android.support.v4.view.ViewPager>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:gravity="top|center"
+
+        android:id="@+id/linearLayout_viewPager_icon"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView01"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/night_icon_pager_0"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView02"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/night_icon_pager_1"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView03"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/night_icon_pager_1"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="最新推荐"
+        android:gravity="center_vertical"
+        android:background="#e9e5e5"/>
+</LinearLayout>

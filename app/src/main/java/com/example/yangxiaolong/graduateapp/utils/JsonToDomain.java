@@ -2,6 +2,7 @@ package com.example.yangxiaolong.graduateapp.utils;
 
 import android.support.annotation.NonNull;
 
+import com.example.yangxiaolong.graduateapp.domain.ActivityThemDomain;
 import com.example.yangxiaolong.graduateapp.domain.Audio;
 import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
 import com.example.yangxiaolong.graduateapp.domain.Pic;
@@ -42,6 +43,27 @@ public class JsonToDomain {
     //用户名
     private String userNick;
 
+    //第二个
+    //不知道
+    private int SubjectId;
+    //活动名字
+    private String Name;
+    //活动头像
+    private String Icon;
+    //活动介绍
+    private String Intro;
+    //活动组题图片
+    private String Banner;
+    //开始时间
+    private long BeginTime;
+    //结束时间
+    private long EndTime;
+    //参加人数
+    private int Members;
+    //发布时间
+    private long Pubtime;
+
+
     public static List<ListUserContent> getData(String json){
         List<ListUserContent> data=new ArrayList<>();
         try {
@@ -63,8 +85,8 @@ public class JsonToDomain {
                 String userNick=jsonObject.getString("UserNick");
                 int shares=jsonObject.getInt("Shares");
                 int picCount=jsonObject.getInt("PicCount");
+                String subject=jsonObject.getString("Subject");
                 ListUserContent listUserContent=null;
-                System.out.println("========Json======categoryId="+categoryId);
                 if(categoryId==29){
                     System.out.println("============解析声音===============");
                     System.out.println("===========jsonArray.length="+jsonArray.length());
@@ -78,11 +100,11 @@ public class JsonToDomain {
                 }else {
                     if(picCount==0) {
                         listUserContent = new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
-                                userId, userLevel, userNick, shares);
+                                userId, userLevel, userNick, shares,subject);
                     }else{
                         Pic pic = getPic(jsonObject);
                         listUserContent=new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
-                                userId, userLevel, userNick, shares,pic,picCount);
+                                userId, userLevel, userNick, shares,pic,picCount,subject);
                     }
                 }
 
@@ -98,10 +120,42 @@ public class JsonToDomain {
 
     @NonNull
     private static Pic getPic(JSONObject jsonObject) throws JSONException {
-        JSONObject jsonObject1=jsonObject.getJSONObject("Pic");
-        int height=jsonObject1.getInt("Height");
-        String url=jsonObject1.getString("Url");
-        int width=jsonObject1.getInt("Width");
-        return new Pic(height,url,width);
+            if(!jsonObject.isNull("Pic")) {
+                JSONObject jsonObject1 = jsonObject.getJSONObject("Pic");
+                int height = jsonObject1.getInt("Height");
+                String url = jsonObject1.getString("Url");
+                int width = jsonObject1.getInt("Width");
+                return new Pic(height, url, width);
+            }
+        return null;
     }
+
+
+    public static List<ActivityThemDomain> getListThemDomain(String json){
+        List<ActivityThemDomain> data=new ArrayList<>();
+
+        JSONArray jsonArray= null;
+        try {
+            JSONObject jsonObject=new JSONObject(json);
+            jsonArray =jsonObject.getJSONArray("result");
+            for(int i=0;i<jsonArray.length();i++) {
+                jsonObject = jsonArray.getJSONObject(i);
+                int SubjectId = jsonObject.getInt("SubjectId");
+                String Name = jsonObject.getString("Name");
+                String Icon = jsonObject.getString("Icon");
+                String Intro = jsonObject.getString("Intro");
+                String Banner = jsonObject.getString("Banner");
+                long BeginTime = jsonObject.getLong("BeginTime");
+                long EndTime = jsonObject.getInt("EndTime");
+                int Members = jsonObject.getInt("Members");
+                long Pubtime = jsonObject.getLong("Pubtime");
+                ActivityThemDomain activityThemDomain=new ActivityThemDomain(SubjectId,Name,Icon,Intro,Banner,BeginTime,EndTime,Members,Pubtime);
+                data.add(activityThemDomain);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
 }

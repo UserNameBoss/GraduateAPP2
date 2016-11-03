@@ -35,6 +35,8 @@ public class ListUserContent {
     //图片数量
     private int picCount;
 
+    private String subject;
+
     //音频文件
     private Audio audio;
 
@@ -73,7 +75,7 @@ public class ListUserContent {
         this.shares = shares;
     }
 
-    public ListUserContent(int articleId,int categoryId, int comments, String content, String title, int favorites, int goods, int hits, String userIcon, int userId, int userLevel, String userNick,int shares) {
+    public ListUserContent(int articleId,int categoryId, int comments, String content, String title, int favorites, int goods, int hits, String userIcon, int userId, int userLevel, String userNick,int shares,String subject) {
         this.categoryId = categoryId;
         this.articleId = articleId;
         this.comments = comments;
@@ -87,9 +89,11 @@ public class ListUserContent {
         this.userLevel = userLevel;
         this.userNick = userNick;
         this.shares=shares;
+        this.subject=subject;
     }
 
-    public ListUserContent(int articleId, int categoryId, int comments, String content, String title, int favorites, int goods, int hits, String userIcon, int userId, int userLevel, String userNick, int shares, Pic pic, int picCount) {
+
+    public ListUserContent(int articleId, int categoryId, int comments, String content, String title, int favorites, int goods, int hits, String userIcon, int userId, int userLevel, String userNick, int shares, Pic pic, int picCount,String subject) {
         this.articleId = articleId;
         this.categoryId = categoryId;
         this.comments = comments;
@@ -105,6 +109,7 @@ public class ListUserContent {
         this.shares = shares;
         this.pic = pic;
         this.picCount = picCount;
+        this.subject=subject;
     }
 
     public Pic getPic() {
@@ -217,6 +222,14 @@ public class ListUserContent {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     @Override

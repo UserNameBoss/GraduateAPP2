@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\GraduateAPP2\library\src\main\assets"/><source path="D:\GraduateAPP2\library\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\GraduateAPP2\library\src\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\yangxiaolong\AndroidStudioProjects\GraduateAPP\library\src\main\assets"/><source path="E:\yangxiaolong\AndroidStudioProjects\GraduateAPP\library\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="E:\yangxiaolong\AndroidStudioProjects\GraduateAPP\library\src\debug\assets"/></dataSet></merger>

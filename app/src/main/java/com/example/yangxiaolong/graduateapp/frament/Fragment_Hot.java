@@ -1,18 +1,23 @@
 package com.example.yangxiaolong.graduateapp.frament;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +30,7 @@ import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_image;
 import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_section;
 import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_sound;
 import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_tyrant;
+import com.example.yangxiaolong.graduateapp.service.PlaySoundService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +55,22 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
     private ViewPager viewPager;
 
     private List<Fragment> fragments;
+    private LocalBroadcastManager localBroadcastManager;
+    private IntentFilter intentFilter=new IntentFilter("audio");
 
+    private PlaySoundService soundService;
+
+    private ServiceConnection serviceConnection=new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            soundService= (PlaySoundService) service;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
     public Fragment_Hot() {
 
     }
@@ -59,10 +80,13 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.frament__hot, container, false);
+
+        localBroadcastManager= LocalBroadcastManager.getInstance(getActivity());
+        localBroadcastManager.registerReceiver(new PathBroadcastReceiver(),intentFilter);
+
         this.linearLayout_title=(LinearLayout)view.findViewById(R.id.linearLayout_title);
         this.linearLayout_line=(LinearLayout)view.findViewById(R.id.linearLayout_line);
         this.viewPager=(ViewPager)view.findViewById(R.id.viewPager);
-
         this.textViews_title=new ArrayList<>();
         this.imageViews_line=new ArrayList<>();
         this.fragments=new ArrayList<>();
@@ -162,7 +186,25 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         oldPosition=0;
+        getActivity().unbindService(serviceConnection);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent intent=new Intent(getActivity(), PlaySoundService.class);
+        getActivity().bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
+        System.out.println("==============HOT.Service============");
+    }
+
+    class PathBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String path=intent.getStringExtra("path");
+            System.out.println("===========path="+path);
+            //getPlayMedia(path);
+        }
+    }
 
 }
