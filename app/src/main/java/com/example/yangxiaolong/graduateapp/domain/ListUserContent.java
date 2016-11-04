@@ -40,6 +40,12 @@ public class ListUserContent {
     //音频文件
     private Audio audio;
 
+
+    //点赞标志
+    private boolean isGood;
+    //收藏标志
+    private boolean isFavorite;
+
     public ListUserContent(int articleId, int categoryId, int comments, String content, String title, int favorites, int goods, int hits, String userIcon, int userId, int userLevel, String userNick, int shares, Pic pic, int picCount, Audio audio) {
         this.articleId = articleId;
         this.categoryId = categoryId;
@@ -230,6 +236,22 @@ public class ListUserContent {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public boolean isGood() {
+        return isGood;
+    }
+
+    public void setGood(boolean good) {
+        isGood = good;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     @Override

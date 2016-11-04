@@ -16,12 +16,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yangxiaolong.graduateapp.MyView.CircleImageView;
 import com.example.yangxiaolong.graduateapp.R;
+import com.example.yangxiaolong.graduateapp.activity.CommentActivity;
 import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
 import com.example.yangxiaolong.graduateapp.domain.Pic;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +48,9 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
     private IntentFilter intentFilter=new IntentFilter("Progress");
     private static CheckBox checkBox;
     private int flag;
+    private NetWorkListUserContent.GetResultCallback getResultCallback;
+
+    private SQListManager sqListManager;
 
     public MyListViewAdapter_Text(Context context, List<ListUserContent> data,int Flag) {
         this.data = data;
@@ -51,6 +59,7 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
         this.flag=Flag;
         localBroadcastManager=LocalBroadcastManager.getInstance(context);
         localBroadcastManager.registerReceiver(new ProgressBroadcastReciver(),intentFilter);
+        sqListManager=new SQListManager(context,"goodCound");
     }
 
 
@@ -74,7 +83,7 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
         convertView = layoutInflater.inflate(R.layout.item_01, null);
         ViewHolder myViewHolder = null;
         ListUserContent listUserContent = data.get(position);
-        if (myViewHolder == null) {
+        if (convertView.getTag()== null) {
             myViewHolder = new ViewHolder(convertView);
             convertView.setTag(myViewHolder);
             myViewHolder.imageView_play.setOnClickListener(this);
@@ -135,11 +144,22 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
             myViewHolder.textView_goodCount.setText(String.valueOf(listUserContent.getGoods()));
             myViewHolder.textView_favoriteCount.setText(String.valueOf(listUserContent.getFavorites()));
             myViewHolder.textView_shareCount.setText(String.valueOf(listUserContent.getShares()));
+            myViewHolder.imageButton_good.setOnClickListener(this);
+            myViewHolder.imageButton_favorite.setOnClickListener(this);
+            if(listUserContent.isGood()){
+                myViewHolder.imageButton_good.setImageResource(R.drawable.btn_good_1);
+            }
+            if(listUserContent.isFavorite()){
+                myViewHolder.imageButton_favorite.setImageResource(R.drawable.btn_favorite_1);
+            }
+            myViewHolder.imageButton_good.setTag(listUserContent);
+            myViewHolder.imageButton_favorite.setTag(listUserContent);
             if(flag==2){
                 myViewHolder.textView_type.setText("#"+listUserContent.getSubject()+"#");
                 myViewHolder.textView_type.setVisibility(View.VISIBLE);
                 myViewHolder.textView_type.setTextColor(Color.RED);
             }
+            myViewHolder.imageButton_comment.setOnClickListener(this);
         }
         return convertView;
     }
@@ -165,6 +185,119 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                 }
                 localBroadcastManager.sendBroadcast(intent);
                 System.out.println("==========点击了==============");
+                break;
+            case R.id.imageButton_good:
+                ImageButton imageButton= (ImageButton) v;
+                imageButton.setImageResource(R.drawable.btn_good_1);
+                final ListUserContent listUserContent= (ListUserContent) v.getTag();
+                if(listUserContent.isGood()){
+                    Toast.makeText(context, "已经点过赞了", Toast.LENGTH_SHORT).show();
+                }else {
+                    System.out.println("========listUserContent1=" + listUserContent);
+                    getResultCallback = new NetWorkListUserContent.GetResultCallback() {
+                        @Override
+                        public void getMessage(String message) {
+
+                            System.out.println("========================"+message.substring(1,2).matches("\\d"));
+                            try {
+                                if(!message.substring(0,1).matches("\\d")) {
+                                    JSONObject jsonObject = new JSONObject(message);
+                                    System.out.println("================isNUll=" + jsonObject.isNull("Message"));
+                                    System.out.println("==============="+jsonObject.getString("Message"));
+
+                                }else{
+                                    String ss = message.substring(0, message.indexOf(","));
+                                    System.out.println("==================messsage=" + message);
+                                    listUserContent.setGoods(Integer.parseInt(ss));
+                                }
+                                notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    String path = "http://xb.huabao.me/?json=gender/article_action_v2";
+                    String pathKey = "sign=38EA9B2CF30D99FC9A742F4C42E84EBD&timestamp="+GETCurrentTime.getTimeMS()+"&action=good&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId=" + listUserContent.getArticleId() + "&userId=2172827";
+                    NetWorkListUserContent.getPostResult(path, pathKey, getResultCallback);
+                    listUserContent.setGood(true);
+                }
+                break;
+
+            case R.id.imageButton_favorite:
+                ImageButton imageButton_favorite= (ImageButton) v;
+
+                final ListUserContent listUserContent02= (ListUserContent) v.getTag();
+                if(listUserContent02.isFavorite()){
+                    Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show();
+                    imageButton_favorite.setImageResource(R.drawable.btn_favorite_0);
+                    getResultCallback = new NetWorkListUserContent.GetResultCallback() {
+                        @Override
+                        public void getMessage(String message) {
+
+                            System.out.println("========================"+message.substring(1,2).matches("\\d"));
+                            try {
+                                if(!message.substring(0,1).matches("\\d")) {
+                                    JSONObject jsonObject = new JSONObject(message);
+                                    System.out.println("================isNUll=" + jsonObject.isNull("Message"));
+                                    System.out.println("==============="+jsonObject.getString("Message"));
+
+                                }else{
+                                    System.out.println("==================messsage=" + message);
+                                    String ss = message;
+
+                                    listUserContent02.setFavorites(Integer.parseInt(ss));
+                                }
+                                notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    String path = "http://xb.huabao.me/?json=gender/article_action_v2";
+                    String pathKey = "sign=sign=96D8945D8C4E7719F8918636DB36D05E&timestamp="+GETCurrentTime.getTimeMS()+"&action=favorite&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId=53488838&userId=2172827";
+                    NetWorkListUserContent.getPostResult(path, pathKey, getResultCallback);
+                    listUserContent02.setFavorite(false);
+
+                }else {
+                    System.out.println("========listUserContent1=" + listUserContent02);
+                    imageButton_favorite.setImageResource(R.drawable.btn_favorite_1);
+                    getResultCallback = new NetWorkListUserContent.GetResultCallback() {
+                        @Override
+                        public void getMessage(String message) {
+
+                            System.out.println("========================"+message.substring(1,2).matches("\\d"));
+                            try {
+                                if(!message.substring(0,1).matches("\\d")) {
+                                    JSONObject jsonObject = new JSONObject(message);
+                                    System.out.println("================isNUll=" + jsonObject.isNull("Message"));
+                                    System.out.println("==============="+jsonObject.getString("Message"));
+
+                                }else{
+                                    System.out.println("==================messsage=" + message);
+                                    String ss = message;
+
+                                    listUserContent02.setFavorites(Integer.parseInt(ss));
+                                }
+                                notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    String path = "http://xb.huabao.me/?json=gender/article_action_v2";
+                    String pathKey = "sign=D70816CA97A6B2F55711E13CD593DAF8&timestamp="+GETCurrentTime.getTimeMS()+"&action=cancel_favorite&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId="+listUserContent02.getArticleId()+"&userId=2172827";
+                    NetWorkListUserContent.getPostResult(path, pathKey, getResultCallback);
+                    listUserContent02.setFavorite(true);
+                }
+                break;
+
+            case R.id.imageButton_comment:
+                Intent intent_comment=new Intent(context,CommentActivity.class);
+                String path="http://xb.huabao.me/?json=gender/comment_list_v2";
+                String pathKey="sign=CE4377C153456E406C476638E639A7C8&timestamp="+GETCurrentTime.getTimeMS()+"&pageSize=20&v=2140&articleId=10139337&fields=ArticleId%2CUserId%2CUserNick%2CUserIcon%2CPubtime%2CComment";
+                intent_comment.putExtra("path",path);
+                intent_comment.putExtra("pathKey",pathKey);
+                context.startActivity(intent_comment);
         }
 
     }

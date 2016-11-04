@@ -23,8 +23,6 @@ public class MyEditext extends EditText {
         //void android.graphics.Canvas.drawRoundRect(RectF rect, float rx, float ry, Paint paint)
         //float rx : x轴的圆角半径
         //float ry : y轴的圆角半径
-
-
         Paint paint=new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(5);

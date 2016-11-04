@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/relativeLayout_wirte_head"
+        android:background="#ff0000">
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/image_writeComment_back"
+            android:src="@drawable/btn_back_0"/>
+        <TextView
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="写评论"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发表"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:id="@+id/text_writeComment_report"
+            android:layout_marginRight="10dp"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"/>
+    </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@+id/relativeLayout_wirte_head"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:hint="你造么？不评论会挨揍的..."/>
+
+        <FrameLayout
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:background="#52ff3474"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_face_pai"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:src="@drawable/icon_camera"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center_horizontal"
+                android:text="搞怪表情随你拍"/>
+        </FrameLayout>
+        </RelativeLayout>
+</RelativeLayout>

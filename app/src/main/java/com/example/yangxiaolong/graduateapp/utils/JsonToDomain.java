@@ -4,8 +4,10 @@ import android.support.annotation.NonNull;
 
 import com.example.yangxiaolong.graduateapp.domain.ActivityThemDomain;
 import com.example.yangxiaolong.graduateapp.domain.Audio;
+import com.example.yangxiaolong.graduateapp.domain.CommentPerson;
 import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
 import com.example.yangxiaolong.graduateapp.domain.Pic;
+import com.example.yangxiaolong.graduateapp.domain.Smilies;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -156,6 +158,93 @@ public class JsonToDomain {
             e.printStackTrace();
         }
         return data;
+    }
+
+
+    public static List<CommentPerson> getJsonToDomain(String json){
+        List<CommentPerson> listComment=new ArrayList<>();
+        CommentPerson commentPerson;
+        try {
+            JSONObject jsonObject=new JSONObject(json);
+            int commentors=jsonObject.getInt("commentors");
+            int count=jsonObject.getInt("count");
+            boolean isnotop=!jsonObject.isNull("ontop");
+
+            JSONArray jsonArray=jsonObject.getJSONArray("result");
+            JSONArray jsonArray1;
+            getCommentPerosn(listComment, commentors, count, isnotop, jsonArray);
+
+            if(isnotop){
+                jsonArray1=jsonObject.getJSONArray("ontop");
+                getCommentPerosn(listComment, commentors, count, isnotop, jsonArray1);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return listComment;
+    }
+
+    private static void getCommentPerosn(List<CommentPerson> listComment, int commentors, int count, boolean isnotop, JSONArray jsonArray) throws JSONException {
+        JSONObject jsonObject;
+        CommentPerson commentPerson;
+        for(int i = 0; i<jsonArray.length(); i++){
+            jsonObject=jsonArray.getJSONObject(i);
+            int CommentId=jsonObject.getInt("CommentId");
+            //评论的内容
+            String Comment=jsonObject.getString("Comment");
+            //发表时间
+            long Pubtime=jsonObject.getLong("Pubtime");
+            //点赞的人数
+            int CommentGoods=jsonObject.getInt("CommentGoods");
+            //@的人的id
+            int AtUserId=jsonObject.getInt("AtUserId");
+            //@的评论的id
+            int AtCommentId=jsonObject.getInt("AtCommentId");
+            //楼
+            int Floor=jsonObject.getInt("Floor");
+            //用户id
+            int UserId=jsonObject.getInt("UserId");
+            //用户的等级经验
+            int UserLevel=jsonObject.getInt("UserLevel");
+            //用户的等级
+            int UserLevel2=jsonObject.getInt("UserLevel2");
+            //用户名
+            String UserNick=jsonObject.getString("UserNick");
+            //用户头像
+            String UserIcon=jsonObject.getString("UserIcon");
+            //不知道
+            String Subject=jsonObject.getString("Subject");
+            //是否是会员
+            int IsVip=jsonObject.getInt("IsVip");
+            //会员点数
+            int VipPoint=jsonObject.getInt("VipPoint");
+            //位置
+            double LonX=jsonObject.getDouble("LonX");
+            double LatY=jsonObject.getDouble("LatY");
+            String Location=jsonObject.getString("Location");
+
+            //评论的样式
+            String CommentStyle=jsonObject.getString("CommentStyle");
+
+            //图片
+
+            if(!jsonObject.isNull("Smilies")){
+                int Height=jsonObject.getInt("Height");
+                String Icon=jsonObject.getString("Icon");
+                int SmiliesId=jsonObject.getInt("SmiliesId");
+                String Name=jsonObject.getString("Name");
+                int Width=jsonObject.getInt("Width");
+                Smilies smilies=new Smilies(Width,Name,SmiliesId,Icon,Height);
+                commentPerson=new CommentPerson(isnotop,commentors,count,CommentId,Comment,Pubtime,CommentGoods,AtUserId,AtCommentId,Floor,
+                        UserId, UserLevel,UserLevel2,UserNick,UserIcon,Subject,IsVip,VipPoint,LonX,LatY,Location,CommentStyle,smilies);
+            }else{
+                commentPerson=new CommentPerson(commentors,count,isnotop,CommentId,Comment,Pubtime,CommentGoods,AtUserId,AtCommentId,Floor,
+                        UserId, UserLevel,UserLevel2,UserNick,UserIcon,Subject,IsVip,VipPoint,LonX,LatY,Location,CommentStyle);
+
+            }
+            listComment.add(commentPerson);
+        }
     }
 
 }
