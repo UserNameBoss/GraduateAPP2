@@ -2,15 +2,21 @@ package com.example.yangxiaolong.graduateapp.frament;
 
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yangxiaolong.graduateapp.MyApplication;
 import com.example.yangxiaolong.graduateapp.MyView.CircleImageView;
 import com.example.yangxiaolong.graduateapp.MyView.ObservableScrollView;
 import com.example.yangxiaolong.graduateapp.R;
@@ -27,6 +34,7 @@ import com.example.yangxiaolong.graduateapp.activity.My_Settins_Activity;
 import com.example.yangxiaolong.graduateapp.activity.My_Task_Activity;
 import com.example.yangxiaolong.graduateapp.activity.My_Vip_Activity;
 import com.example.yangxiaolong.graduateapp.activity.My_Yellow_Activity;
+import com.example.yangxiaolong.graduateapp.utils.SetShowMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,10 +98,13 @@ public class Fragment_my extends Fragment {
     @BindView(R.id.textView_bahao)
     TextView textView_bahao;
 
+
     private ObservableScrollView scrollView_my;
     private LinearLayout linearLayout;
     private ImageView imageView_changeStyle;
     private boolean isChecked;
+
+    private SetShowMode setShowMode;
 
     public Fragment_my() {
         // Required empty public constructor
@@ -117,16 +128,31 @@ public class Fragment_my extends Fragment {
         this.linearLayout = (LinearLayout) view.findViewById(R.id.linearLayout_my_titleBar);
         this.imageView_changeStyle = (ImageView) view.findViewById(R.id.img_changeStyle);
         this.imgStatu();
-
+        if(setShowMode==null){
+            setShowMode=new SetShowMode();
+        }
         this.imageView_changeStyle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isChecked) {
                     imageView_changeStyle.setImageResource(R.drawable.bg_chkbox_new_1);
                     isChecked = true;
+                    ((MyApplication)getActivity().getApplication()).isNight=true;
+                    setShowMode.setMode(getActivity());
+
                 } else {
                     imageView_changeStyle.setImageResource(R.drawable.bg_chkbox_new_0);
                     isChecked = false;
+                    ((MyApplication)getActivity().getApplication()).isNight=false;
+                  /* if(setShowMode.i==0){
+                       setShowMode.cancelMode(getActivity());
+                   }else {
+                       for(int i=0;i<setShowMode.i;i++){
+                           setShowMode.cancelMode(getActivity());
+                       }
+                   }*/
+                    setShowMode.cancelMode(getActivity());
+
                 }
             }
         });
@@ -144,9 +170,6 @@ public class Fragment_my extends Fragment {
         return view;
     }
 
-    private void initView() {
-
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -154,13 +177,6 @@ public class Fragment_my extends Fragment {
         if (isVisibleToUser && this.scrollView_my != null) {
             this.scrollView_my.scrollTo(0, 0);
         }
-        /*if(imageView_changeStyle!=null){
-            if(!isChecked){
-                imageView_changeStyle.setImageResource(R.drawable.bg_chkbox_new_1);
-            }else{
-                imageView_changeStyle.setImageResource(R.drawable.bg_chkbox_new_0);
-            }
-        }*/
 
     }
 
@@ -297,4 +313,5 @@ public class Fragment_my extends Fragment {
            this.linearLayoutLoginUserID.setVisibility(View.GONE);
        }
     }
+
 }
