@@ -62,11 +62,7 @@
         ]
     },
     {
-<<<<<<< Updated upstream
-        "outputFile": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-iw\\values-iw.xml",
-=======
-        "outputFile": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-iw\\values-iw.xml",
->>>>>>> Stashed changes
+        "outputFile": "D:\\GraduateAPP2\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-iw\\values-iw.xml",
         "map": [
             {
                 "to": {
@@ -77,11 +73,7 @@
                     "endOffset": 118
                 },
                 "from": {
-<<<<<<< Updated upstream
-                    "file": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
-=======
-                    "file": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
->>>>>>> Stashed changes
+                    "file": "D:\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -100,11 +92,7 @@
                     "endOffset": 185
                 },
                 "from": {
-<<<<<<< Updated upstream
-                    "file": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
-=======
-                    "file": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
->>>>>>> Stashed changes
+                    "file": "D:\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -123,11 +111,7 @@
                     "endOffset": 256
                 },
                 "from": {
-<<<<<<< Updated upstream
-                    "file": "D:\\AndroidStudioApplication\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
-=======
-                    "file": "C:\\Users\\callmenero\\Documents\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
->>>>>>> Stashed changes
+                    "file": "D:\\GraduateAPP2\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,

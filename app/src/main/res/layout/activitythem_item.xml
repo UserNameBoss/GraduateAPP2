@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:id="@+id/imageView_icon"
+        android:src="@mipmap/ic_launcher"
+        android:layout_margin="10dp"/>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="活动主题"
+            android:id="@+id/textView_title"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="参与的人数"
+            android:id="@+id/textView_Members"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:gravity="right">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_time"
+            android:text="时间"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/darker_gray"
+            android:id="@+id/textView_start"
+            android:text="活动状态"/>
+    </LinearLayout>
+</LinearLayout>

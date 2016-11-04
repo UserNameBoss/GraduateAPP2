@@ -59,12 +59,24 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="属性"
+             android:id="@+id/textView_type"
+             android:visibility="gone"
+             android:textColor="@android:color/holo_red_light"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="主题"
             android:visibility="gone"
             android:id="@+id/textVIew_title"/>
+        </LinearLayout>
         <TextView
             android:text="暂无数据！"
             android:id="@+id/textView_content"
@@ -74,17 +86,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher"
             android:visibility="gone"
             android:id="@+id/imageView_content"/>
         <FrameLayout
             android:layout_width="match_parent"
             android:id="@+id/frameLayout_playSound"
+            android:visibility="gone"
             android:layout_height="wrap_content">
 
             <ProgressBar
                 android:id="@+id/progressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="3dp"
+                android:visibility="invisible"
+                android:progressDrawable="@drawable/myprogressbar_drawable"
                 android:layout_gravity="center_vertical" />
 
             <CheckBox
@@ -92,6 +109,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/imageView_play"
                 android:button="@null"
+                android:focusable="false"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/mediapause" />
             <TextView
@@ -170,8 +188,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:id="@+id/textVeiw_audioPath"/>
             <ImageButton
                 android:id="@+id/imageButton_favorite"
                 android:background="@drawable/night_btn_favorite_0"

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="总共参加的人数"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:id="@+id/textView_tyrant_total"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查看更多"
+                android:layout_weight="1"
+                android:gravity="right"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout_heard"></LinearLayout>
+    </LinearLayout>
+</LinearLayout>

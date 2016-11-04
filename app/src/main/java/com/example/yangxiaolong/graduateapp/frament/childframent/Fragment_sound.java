@@ -1,7 +1,10 @@
 package com.example.yangxiaolong.graduateapp.frament.childframent;
 
 
+import android.content.ComponentName;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.ListView;
 
 import com.example.yangxiaolong.graduateapp.R;
 import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
+import com.example.yangxiaolong.graduateapp.service.PlaySoundService;
 import com.example.yangxiaolong.graduateapp.utils.GETCurrentTime;
 import com.example.yangxiaolong.graduateapp.utils.JsonToDomain;
 import com.example.yangxiaolong.graduateapp.utils.MyListViewAdapter_Text;
@@ -31,6 +35,18 @@ public class Fragment_sound extends Fragment {
     private NetWorkListUserContent netWorkListUserContent;
     private List<ListUserContent> data;
     String afterDate="1478003200000";
+    private PlaySoundService playSoundService;
+    private ServiceConnection serviceConnection=new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            playSoundService=((PlaySoundService) service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 
     public Fragment_sound(){
         long timeMs= GETCurrentTime.getTimeMS();
@@ -49,15 +65,12 @@ public class Fragment_sound extends Fragment {
             @Override
             public void getMessage(String message) {
 
-                System.out.println("=================message="+message);
                 data= JsonToDomain.getData(message);
                 System.out.println("=================data.size="+data.size());
-                pullToRefreshListView.setAdapter(new MyListViewAdapter_Text(getContext(),data));
+                pullToRefreshListView.setAdapter(new MyListViewAdapter_Text(getContext(),data,1));
             }
         });
-
         NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
-
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -71,4 +84,5 @@ public class Fragment_sound extends Fragment {
         });
         return view;
     }
+
 }

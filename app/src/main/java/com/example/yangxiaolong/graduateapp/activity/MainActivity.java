@@ -1,7 +1,7 @@
 package com.example.yangxiaolong.graduateapp.activity;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,11 +10,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,13 +23,6 @@ import com.example.yangxiaolong.graduateapp.frament.Fragment_Hot;
 import com.example.yangxiaolong.graduateapp.frament.Fragment_find;
 import com.example.yangxiaolong.graduateapp.frament.Fragment_message;
 import com.example.yangxiaolong.graduateapp.frament.Fragment_my;
-import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_activityThem;
-import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_essence;
-import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_hot;
-import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_image;
-import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_section;
-import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_sound;
-import com.example.yangxiaolong.graduateapp.frament.childframent.Fragment_tyrant;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
     private ViewPager viewPager;
@@ -216,5 +207,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (dialog!=null){
             dialog.dismiss();
         }
+    }
+
+    public  Context getMyContext(){
+        return this;
     }
 }
