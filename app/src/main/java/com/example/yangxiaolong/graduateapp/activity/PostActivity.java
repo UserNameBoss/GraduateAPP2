@@ -34,7 +34,9 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yangxiaolong.graduateapp.MyApplication;
 import com.example.yangxiaolong.graduateapp.R;
+import com.example.yangxiaolong.graduateapp.utils.SetShowMode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -75,8 +77,13 @@ public class PostActivity extends Activity implements View.OnClickListener {
         }*/
         setContentView(R.layout.activity_post);
         ButterKnife.bind(this);
-
-
+        SetShowMode setShowMode=new SetShowMode();
+        if(((MyApplication)getApplication()).isNight){
+            setShowMode=new SetShowMode();
+            setShowMode.setMode(this);
+        }else {
+            setShowMode.cancelMode(this);
+        }
     }
 
 
