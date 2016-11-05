@@ -130,26 +130,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
+
         android:layout_marginBottom="5dp">
         <LinearLayout
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:layout_weight="1">
             <ImageButton
                 android:id="@+id/imageButton_good"
-                android:background="@drawable/dark_btn_good_0"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:background="@android:color/white"
+                android:src="@drawable/btn_good_0"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
             <TextView
                 android:text="0"
+                android:gravity="center"
+                android:layout_marginRight="10dp"
                 android:id="@+id/textView_goodCount"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
         </LinearLayout>
         <LinearLayout
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -157,34 +163,38 @@
             >
             <ImageButton
                 android:id="@+id/imageButton_comment"
-                android:background="@drawable/night_btn_comment_0"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:background="@drawable/comment_background"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
             <TextView
                 android:text="0"
+                android:gravity="center"
                 android:id="@+id/textView_commentCount"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
         </LinearLayout>
         <LinearLayout
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:layout_weight="1">
             <ImageButton
                 android:id="@+id/imageButton_share"
-                android:background="@drawable/night_btn_share_0"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:background="@drawable/btn_share_0"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
             <TextView
                 android:text="0"
+                android:gravity="center"
                 android:id="@+id/textView_shareCount"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
         </LinearLayout>
         <LinearLayout
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -196,11 +206,13 @@
                 android:id="@+id/textVeiw_audioPath"/>
             <ImageButton
                 android:id="@+id/imageButton_favorite"
-                android:background="@drawable/night_btn_favorite_0"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:background="@android:color/white"
+                android:src="@drawable/btn_favorite_0"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
             <TextView
                 android:text="0"
+                android:gravity="center"
                 android:id="@+id/textView_favoriteCount"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
