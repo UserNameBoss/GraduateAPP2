@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <!--活动专题-->
+    <RelativeLayout
+        android:id="@+id/relativeLayout_bayou"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff3344"
+        >
+
+        <ImageView
+            android:id="@+id/imageView_add"
+            android:onClick="add"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_0"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="4"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:text="霸友福利栏"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/imageView_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/hot_refresh_level" />
+
+        <ImageView
+            android:id="@+id/imageView_refresh_gray"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/base_loading_small_icon" />
+    </RelativeLayout>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/darker_gray"
+        android:dividerPadding="5dp"
+        android:id="@+id/childListView_find_nearby"
+        ptr:ptrDrawable="@drawable/icon_logo36"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrHeaderBackground="@android:color/darker_gray"
+        ptr:ptrHeaderTextColor="#383838"
+        >
+
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
+    </LinearLayout>

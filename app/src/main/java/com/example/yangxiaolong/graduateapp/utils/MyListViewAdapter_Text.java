@@ -59,7 +59,6 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
         this.flag=Flag;
         localBroadcastManager=LocalBroadcastManager.getInstance(context);
         localBroadcastManager.registerReceiver(new ProgressBroadcastReciver(),intentFilter);
-        sqListManager=new SQListManager(context,"goodCound");
     }
 
 

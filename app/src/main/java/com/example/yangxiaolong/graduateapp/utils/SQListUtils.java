@@ -20,7 +20,7 @@ public class SQListUtils extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         StringBuilder sql_createTable_atticle=new StringBuilder("CREATE TABLE IF NOT EXISTS ")
                 .append(SQLname+"( ").append("id").append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
-                .append("articleId").append(" INTEGER;");
+                .append("articleId ").append("INTEGER;");
 
         db.execSQL(sql_createTable_atticle.toString());
     }

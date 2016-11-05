@@ -195,7 +195,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="霸友秀"
+                android:text="活动专题"
                 android:textSize="20sp"
 
                 android:layout_toRightOf="@+id/img_welfare"
@@ -208,7 +208,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="千万霸友聚集在此"
+                android:text="参与活动赚金币"
                 android:textSize="15sp"
                 android:layout_below="@+id/text_welfare"
                 android:layout_toRightOf="@+id/img_welfare"
@@ -313,7 +313,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="免费赚福利"
+                android:text="走过路过不要错过"
                 android:textSize="15sp"
                 android:layout_below="@+id/text_yellow"
                 android:layout_toRightOf="@+id/img_yellow"
@@ -404,7 +404,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="店神微笑"
+                android:text="笑神微店"
                 android:textSize="20sp"
 
                 android:layout_toRightOf="@+id/img_godsmile"
