@@ -1,5 +1,6 @@
 package com.example.yangxiaolong.graduateapp.activity;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -7,7 +8,7 @@ import com.example.yangxiaolong.graduateapp.MyApplication;
 import com.example.yangxiaolong.graduateapp.R;
 import com.example.yangxiaolong.graduateapp.utils.SetShowMode;
 
-public class Feedback_Activity extends AppCompatActivity {
+public class Feedback_Activity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

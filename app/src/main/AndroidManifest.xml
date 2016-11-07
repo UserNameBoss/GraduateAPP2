@@ -38,8 +38,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MessageCenter_Activity" />
-        <activity android:name=".activity.Comment_Collect_Activity" />
-        <activity android:name=".activity.Feedback_Activity" />
+        <activity
+            android:name=".activity.Comment_Collect_Activity"
+           />
+        <activity android:name=".activity.Feedback_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"/>
         <activity
             android:name=".activity.My_Gold_Activity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
@@ -107,6 +110,20 @@
         <activity android:name=".activity.SubjectActivity"></activity>
         <activity android:name=".activity.SubjectItemActivity"></activity>
         <activity android:name=".activity.PostAudioActivity"></activity>
+
+
+        <activity android:name=".activity.StoreDiscount_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"  ></activity>
+        <activity android:name=".activity.VipHelp_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
+        <activity android:name=".activity.MessageSet_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" ></activity>
+        <activity android:name=".activity.Messagedelete_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
+        <activity android:name=".activity.CommonProblem_Avtivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
+        <activity android:name=".activity.BuyVip_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
     </application>
 
 </manifest>
