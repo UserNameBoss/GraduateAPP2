@@ -1,6 +1,6 @@
 package com.example.yangxiaolong.graduateapp.interfaces;
 
-import com.example.yangxiaolong.graduateapp.domain.ListUserContent02;
+import com.example.yangxiaolong.graduateapp.domain.UserMessage;
 
 import java.util.Map;
 
@@ -15,6 +15,6 @@ import retrofit2.http.POST;
 public interface GETListUserContent {
 
     @FormUrlEncoded
-    @POST("category_article_list_hot_v2")
-    Call<ListUserContent02> addReviews(@FieldMap Map<String,String> map);
+    @POST("get_user_info")
+    Call<UserMessage> addReviews(@FieldMap Map<String,String> map);
 }

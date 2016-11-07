@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.example.yangxiaolong.graduateapp.MyView.CircleImageView;
 import com.example.yangxiaolong.graduateapp.R;
 import com.example.yangxiaolong.graduateapp.activity.CommentActivity;
+import com.example.yangxiaolong.graduateapp.activity.IconUserInforActivity;
 import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
 import com.example.yangxiaolong.graduateapp.domain.Pic;
 import com.squareup.picasso.Picasso;
@@ -33,6 +35,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 /**
  * Created by yangxiaolong on 2016/11/1.
@@ -91,7 +95,7 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
         }
         if(listUserContent!=null) {
             if (listUserContent.getCategoryId() == 29) {
-                myViewHolder.textView_hits.setText(String.valueOf(listUserContent.getHits()));
+                myViewHolder.textView_hits.setText(String.valueOf(listUserContent.getHits())+"次播放");
                 Pic pic = listUserContent.getPic();
                 if(pic!=null) {
                     int height = pic.getHeight();
@@ -159,6 +163,12 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                 myViewHolder.textView_type.setTextColor(Color.RED);
             }
             myViewHolder.imageButton_comment.setOnClickListener(this);
+            myViewHolder.textView_articleId.setText(String.valueOf(listUserContent.getArticleId()));
+            myViewHolder.imageButton_comment.setTag(listUserContent);
+            myViewHolder.circleImageView_Img.setTag(listUserContent.getUserId());
+            myViewHolder.circleImageView_Img.setOnClickListener(this);
+            myViewHolder.imageButton_share.setTag(listUserContent);
+            myViewHolder.imageButton_share.setOnClickListener(this);
         }
         return convertView;
     }
@@ -291,12 +301,95 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                 break;
 
             case R.id.imageButton_comment:
+                //ListUserContent listUserContent1= (ListUserContent) v.getTag();
+                ListUserContent listUserContent1= (ListUserContent) v.getTag();
+
                 Intent intent_comment=new Intent(context,CommentActivity.class);
                 String path="http://xb.huabao.me/?json=gender/comment_list_v2";
-                String pathKey="sign=CE4377C153456E406C476638E639A7C8&timestamp="+GETCurrentTime.getTimeMS()+"&pageSize=20&v=2140&articleId=10139337&fields=ArticleId%2CUserId%2CUserNick%2CUserIcon%2CPubtime%2CComment";
+                String pathKey="sign=B951E6A6BC6BE9A98A2D8C1819006C23&timestamp="+GETCurrentTime.getTimeMS()+"&pageSize=20&v=2140&articleId="+listUserContent1.getArticleId()+"&fields=ArticleId%2CUserId%2CUserNick%2CUserIcon%2CPubtime%2CComment";
                 intent_comment.putExtra("path",path);
                 intent_comment.putExtra("pathKey",pathKey);
+                Bundle bundle=new Bundle();
+                bundle.putInt("articleId",listUserContent1.getArticleId());
+                bundle.putInt("categoryId",listUserContent1.getCategoryId());
+                bundle.putInt("comments",listUserContent1.getComments());
+                bundle.putString("content",listUserContent1.getContent());
+                bundle.putString("title",listUserContent1.getTitle());
+                bundle.putInt("favorites",listUserContent1.getFavorites());
+                bundle.putInt("goods",listUserContent1.getGoods());
+                bundle.putBoolean("isGoods",listUserContent1.isGood());
+                bundle.putBoolean("isFavorites",listUserContent1.isFavorite());
+                bundle.putInt("hits",listUserContent1.getHits());
+                bundle.putString("userNameIcon",listUserContent1.getUserIcon());
+                bundle.putInt("shares",listUserContent1.getShares());
+                bundle.putString("userNick",listUserContent1.getUserNick());
+                bundle.putInt("flag",flag);
+                if(listUserContent1.getAudio()!=null){
+                    String audio=listUserContent1.getAudio().getAudio();
+                    int duration=listUserContent1.getAudio().getDuration();
+                    bundle.putString("audio",audio);
+                    bundle.putInt("duration",duration);
+                }
+                if(listUserContent1.getPic()!=null){
+                    Pic pic=listUserContent1.getPic();
+                    bundle.putString("url",pic.getUrl());
+                    bundle.putInt("height",pic.getHeight());
+                    bundle.putInt("width",pic.getWidth());
+                }
+                intent_comment.putExtras(bundle);
                 context.startActivity(intent_comment);
+                break;
+            case R.id.circleImageView_img:
+                path="http://xb.huabao.me/?json=gender/get_user_info";
+                int artId= (int) v.getTag();
+                pathKey="sign=DF5F861868784C8D7D186619CA593BCD&timestamp="+GETCurrentTime.getTimeMS()+"&v=2140&operator=2172827&userId="+v.getTag();
+                Intent intent1=new Intent(context,IconUserInforActivity.class);
+                intent1.putExtra("path",path);
+                intent1.putExtra("pathKey",pathKey);
+                intent1.putExtra("userId",artId);
+                System.out.println("=======================onClick.UserIcon============");
+
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent1);
+
+                break;
+            case R.id.imageButton_share:
+                ShareSDK.initSDK(context);
+                OnekeyShare oks = new OnekeyShare();
+                ListUserContent listUserContent_share= (ListUserContent) v.getTag();
+                if(listUserContent_share.getPic()!=null){
+                    oks.setImageUrl(listUserContent_share.getPic().getUrl());
+                }else {
+
+                }
+
+                //关闭sso授权
+                oks.disableSSOWhenAuthorize();
+
+                // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+                oks.setTitle("笑神来了");
+                // titleUrl是标题的网络链接，QQ和QQ空间等使用
+                oks.setTitleUrl("http://xb.huabao.me/?json=gender/comment_list_v2");
+                // text是分享文本，所有平台都需要这个字段
+                if(listUserContent_share.getContent()!=null) {
+                    oks.setText(listUserContent_share.getContent());
+                }else{
+                    oks.setText(listUserContent_share.getTitle().toString());
+                }
+            // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+            //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+            // url仅在微信（包括好友和朋友圈）中使用
+                oks.setUrl("http://xb.huabao.me/?json=gender/comment_list_v2");
+            // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+            //                oks.setComment("我是测试评论文本");
+            // site是分享此内容的网站名称，仅在QQ空间使用
+                oks.setSite(context.getString(R.string.app_name));
+            // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+                oks.setSiteUrl("http://xb.huabao.me/?json=gender/comment_list_v2");
+
+                // 启动分享GUI
+                oks.show(context);
+
         }
 
     }
@@ -344,6 +437,8 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
         TextView textView_audioPath;
         @BindView(R.id.textView_type)
         TextView textView_type;
+        @BindView(R.id.textView_articleId)
+        TextView textView_articleId;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
@@ -372,5 +467,10 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
             list.add(data.get(i).getUserIcon());
         }
         return list;
+    }
+
+    public void getNotifi(List<ListUserContent> data){
+        this.data=data;
+        notifyDataSetChanged();
     }
 }

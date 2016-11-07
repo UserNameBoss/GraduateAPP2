@@ -10,7 +10,7 @@
         android:divider="#edecec"
         android:dividerHeight="10dp"
         android:id="@+id/childListView_tyrant"
-        ptr:ptrDrawable="@drawable/default_ptr_flip"
+        ptr:ptrDrawable="@drawable/icon_logo36"
         ptr:ptrAnimationStyle="flip"
         ptr:ptrHeaderBackground="@android:color/darker_gray"
         ptr:ptrHeaderTextColor="#383838"></com.handmark.pulltorefresh.library.PullToRefreshListView>

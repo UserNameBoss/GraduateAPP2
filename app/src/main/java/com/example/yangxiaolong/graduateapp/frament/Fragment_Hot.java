@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -59,6 +59,7 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
     private IntentFilter intentFilter=new IntentFilter("audio");
 
     private PlaySoundService soundService;
+    private int preFragment;
 
     private ServiceConnection serviceConnection=new ServiceConnection() {
         @Override
@@ -90,25 +91,7 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
         this.textViews_title=new ArrayList<>();
         this.imageViews_line=new ArrayList<>();
         this.fragments=new ArrayList<>();
-        Fragment fragment_hot=new Fragment_hot();
-        Fragment fragment_essence=new Fragment_essence();
-        Fragment fragment_image=new Fragment_image();
-        Fragment fragment_section=new Fragment_section();
-        Fragment fragment_sound=new Fragment_sound();
-        Fragment fragment_tyrant=new Fragment_tyrant();
-        Fragment fragment_activityTheme=new Fragment_activityThem();
-
-        this.fragments.add(fragment_hot);
-        this.fragments.add(fragment_essence);
-        this.fragments.add(fragment_image);
-        this.fragments.add(fragment_section);
-        this.fragments.add(fragment_sound);
-        this.fragments.add(fragment_tyrant);
-        this.fragments.add(fragment_activityTheme);
-
-       //设置适配器
-        this.adapater=new MyFragementAdapater(getFragmentManager());
-        this.viewPager.setAdapter(adapater);
+        getRest();
 
         this.viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -152,11 +135,29 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
             textView.setOnClickListener(this);
             this.textViews_title.add(textView);
         }
-
-
         return view;
+    }
 
+    private void getRest() {
+        Fragment fragment_hot=new Fragment_hot();
+        Fragment fragment_essence=new Fragment_essence();
+        Fragment fragment_image=new Fragment_image();
+        Fragment fragment_section=new Fragment_section();
+        Fragment fragment_sound=new Fragment_sound();
+        Fragment fragment_tyrant=new Fragment_tyrant();
+        Fragment fragment_activityTheme=new Fragment_activityThem();
 
+        this.fragments.add(fragment_hot);
+        this.fragments.add(fragment_essence);
+        this.fragments.add(fragment_image);
+        this.fragments.add(fragment_section);
+        this.fragments.add(fragment_sound);
+        this.fragments.add(fragment_tyrant);
+        this.fragments.add(fragment_activityTheme);
+
+        //设置适配器
+        this.adapater=new MyFragementAdapater(getFragmentManager());
+        this.viewPager.setAdapter(adapater);
     }
 
     @Override
@@ -165,7 +166,7 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
         this.viewPager.setCurrentItem(position);
     }
 
-    private class MyFragementAdapater extends FragmentStatePagerAdapter{
+    private class MyFragementAdapater extends FragmentPagerAdapter {
 
         public MyFragementAdapater(FragmentManager fm) {
             super(fm);
@@ -195,6 +196,14 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
         Intent intent=new Intent(getActivity(), PlaySoundService.class);
         getActivity().bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
         System.out.println("==============HOT.Service============");
+        getRest();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
     }
 
     class PathBroadcastReceiver extends BroadcastReceiver {
@@ -203,8 +212,7 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
         public void onReceive(Context context, Intent intent) {
             String path=intent.getStringExtra("path");
             System.out.println("===========path="+path);
-            //getPlayMedia(path);
+
         }
     }
-
 }

@@ -2,10 +2,12 @@ package com.example.yangxiaolong.graduateapp.frament.childframent;
 
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.yangxiaolong.graduateapp.R;
@@ -31,12 +33,13 @@ public class Fragment_section extends Fragment {
     private NetWorkListUserContent.GetResultCallback getResultCallback;
     private NetWorkListUserContent netWorkListUserContent;
     private List<ListUserContent> data;
-    String afterDate="1478078888000";
+    private MyListViewAdapter_Text myListViewAdapter_text;
 
+    long timeMs= GETCurrentTime.getTimeMS();
     public Fragment_section(){
-        long timeMs= GETCurrentTime.getTimeMS();
+
         System.out.println("========timeMs="+timeMs);
-        pathKey="sign=FFF9F22C348A8973CAD"+timeMs+"&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&categoryId=1";
+        pathKey="sign=A979A5570474628FD77728B618CC9533E&timestamp="+timeMs+"&afterDate="+(timeMs-100000)+"&v=2140&categoryId=1";
 
     }
 
@@ -51,10 +54,32 @@ public class Fragment_section extends Fragment {
             @Override
             public void getMessage(String message) {
 
+            if(data==null) {
+                data = JsonToDomain.getData(message);
+                System.out.println("=================data.size=" + data.size());
+                myListViewAdapter_text=new MyListViewAdapter_Text(getContext(), data, 1);
+                pullToRefreshListView.setAdapter(myListViewAdapter_text);
+            }else{
+                data=JsonToDomain.getData(message);
+                System.out.println("==========================image.OnCreagetView.data===!null================"+data.size());
+                myListViewAdapter_text = new MyListViewAdapter_Text(getContext(), data, 1);
+                pullToRefreshListView.setAdapter(myListViewAdapter_text);
+            }
 
-                data= JsonToDomain.getData(message);
-                System.out.println("=================data.size="+data.size());
-                pullToRefreshListView.setAdapter(new MyListViewAdapter_Text(getContext(),data,1));
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    SystemClock.sleep(1000);
+                    if(getActivity()!=null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                pullToRefreshListView.onRefreshComplete();
+                            }
+                        });
+                    }
+                }
+            }).start();
             }
         });
 
@@ -63,15 +88,22 @@ public class Fragment_section extends Fragment {
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                long timeMs= GETCurrentTime.getTimeMS();
-                int a=78888000+10000000;
-                afterDate=afterDate.substring(5)+a;
-                pathKey="sign=FFF9F22C348A8973CAD"+timeMs+"&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&categoryId=1";
+                long afterDate=timeMs-100000;
+                pathKey="sign=2B4DFF8138A3DF04F6240D62FA2D9977&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&categoryId=1";
                 NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+            }
+        });
+        pullToRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                System.out.println("========点击条目--hot============");
+                myListViewAdapter_text.onClick(view.findViewById(R.id.imageButton_comment));
 
             }
         });

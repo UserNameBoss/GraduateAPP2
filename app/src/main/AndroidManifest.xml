@@ -38,11 +38,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MessageCenter_Activity" />
-        <activity
-            android:name=".activity.Comment_Collect_Activity"
-           />
-        <activity android:name=".activity.Feedback_Activity"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"/>
+        <activity android:name=".activity.Comment_Collect_Activity" />
+        <activity android:name=".activity.Feedback_Activity" />
         <activity
             android:name=".activity.My_Gold_Activity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
@@ -124,6 +121,19 @@
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
         <activity android:name=".activity.BuyVip_Activity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
+        <activity
+            android:name=".activity.CommentActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name=".activity.WriteCommentActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+
+        <service android:name=".service.PlaySoundService" />
+
+        <activity
+            android:name=".activity.IconUserInforActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity android:name=".activity.SendMessageActivity"></activity>
     </application>
 
 </manifest>

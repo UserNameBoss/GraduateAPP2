@@ -21,6 +21,7 @@ import com.example.yangxiaolong.graduateapp.domain.ActivityThemDomain;
 import com.example.yangxiaolong.graduateapp.utils.JsonToDomain;
 import com.example.yangxiaolong.graduateapp.utils.MyAdapterThem;
 import com.example.yangxiaolong.graduateapp.utils.NetWorkListUserContent;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.squareup.picasso.Picasso;
 
@@ -42,7 +43,7 @@ public class Fragment_activityThem extends Fragment {
     private int preId;
     private int wedth;
     private int height;
-
+    MyAdapterThem myAdapterThem;
     private String pathKey="sign=4216E0F5617E4EB1886462E81F813B74&timestamp=1478163052272&pageSize=20&startTime=9223372036854775807&v=2140&userId=2172827";
     public Fragment_activityThem() {
 
@@ -57,11 +58,13 @@ public class Fragment_activityThem extends Fragment {
         getResultCallback=(new NetWorkListUserContent.GetResultCallback() {
             @Override
             public void getMessage(String message) {
+                if(data==null) {
+                    data = JsonToDomain.getListThemDomain(message);
+                    System.out.println("=================data.size=" + data.size());
+                    myAdapterThem= new MyAdapterThem(getContext(), data);
+                    pullToRefreshListView.setAdapter(myAdapterThem);
 
-                data= JsonToDomain.getListThemDomain(message);
-                System.out.println("=================data.size="+data.size());
-                MyAdapterThem myAdapterThem=new MyAdapterThem(getContext(),data);
-                pullToRefreshListView.setAdapter(myAdapterThem);
+
                 listView=pullToRefreshListView.getRefreshableView();
                 LayoutInflater layoutInflater=LayoutInflater.from(getContext());
                 final View view1=layoutInflater.inflate(R.layout.activitythem_head,null);
@@ -100,12 +103,47 @@ public class Fragment_activityThem extends Fragment {
 
                     }
                 });
+                }else{
+                    data=JsonToDomain.getListThemDomain(message);
+                    System.out.println("==========================tyrant.OnCreagetView.data===!null================"+data.size());
+                    myAdapterThem = new MyAdapterThem(getContext(), data);
+                    pullToRefreshListView.setAdapter(myAdapterThem);
+                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SystemClock.sleep(1000);
 
+                        if(getActivity()!=null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pullToRefreshListView.onRefreshComplete();
+                                }
+                            });
+                        }
+                    }
+                }).start();
             }
         });
 
         NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
         new MyThread().start();
+        pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                pathKey="sign=12F677B3F83EF71F200503E5BA5A54C6&timestamp=1478330688640&pageSize=20&startTime=9223372036854775807&v=2140&userId=2172827";
+                NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+            }
+        });
+
+
+
         return view;
     }
 

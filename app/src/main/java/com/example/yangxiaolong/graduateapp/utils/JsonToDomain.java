@@ -1,5 +1,6 @@
 package com.example.yangxiaolong.graduateapp.utils;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.example.yangxiaolong.graduateapp.domain.ActivityThemDomain;
@@ -8,6 +9,7 @@ import com.example.yangxiaolong.graduateapp.domain.CommentPerson;
 import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
 import com.example.yangxiaolong.graduateapp.domain.Pic;
 import com.example.yangxiaolong.graduateapp.domain.Smilies;
+import com.example.yangxiaolong.graduateapp.domain.UserMessage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,8 +92,6 @@ public class JsonToDomain {
                 String subject=jsonObject.getString("Subject");
                 ListUserContent listUserContent=null;
                 if(categoryId==29){
-                    System.out.println("============解析声音===============");
-                    System.out.println("===========jsonArray.length="+jsonArray.length());
                      Pic pic=getPic(jsonObject);
                      JSONObject jsonObject1=jsonObject.getJSONObject("Audio");
                      int duration=jsonObject1.getInt("Duration");
@@ -246,5 +246,149 @@ public class JsonToDomain {
             listComment.add(commentPerson);
         }
     }
+    public ListUserContent getListUserContent(Bundle bundle){
+        ListUserContent listUserContent;
+        int articleId=bundle.getInt("articleId");
+        int categoryId=bundle.getInt("aategoryId");
+        int comments=bundle.getInt("comments");
+        String content=bundle.getString("content");
+        String title=bundle.getString("title");
+        int favorites=bundle.getInt("favorites");
+        int goods=bundle.getInt("goods");
+        int hits=bundle.getInt("hits");
+        String userIcon=bundle.getString("userIcon");
+        int userId=bundle.getInt("userId");
+        int userLevel=bundle.getInt("userLevel");
+        String userNick=bundle.getString("userNick");
+        int shares=bundle.getInt("shares");
+        int picCount=bundle.getInt("picCount");
+        String subject=bundle.getString("subject");
+        if(bundle.getInt("categoryId")==29){
 
+            int duration=bundle.getInt("duration");
+            String audiop=bundle.getString("audio");
+            Audio audio=new Audio(audiop,duration);
+            Pic pic=getPic(bundle);
+            listUserContent=new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
+                    userId, userLevel, userNick, shares,pic,picCount,audio);
+        }else {
+            if(picCount==0) {
+                listUserContent = new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
+                        userId, userLevel, userNick, shares,subject);
+            }else{
+                Pic pic = getPic(bundle);
+                listUserContent=new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
+                        userId, userLevel, userNick, shares,pic,picCount,subject);
+            }
+        }
+        return listUserContent;
+    }
+
+
+    private static Pic getPic(Bundle bundle){
+        if(!bundle.getBoolean("url")) {
+
+            int height = bundle.getInt("height");
+            String url = bundle.getString("url");
+            int width = bundle.getInt("width");
+            return new Pic(height, url, width);
+        }
+        return null;
+    }
+
+
+    public static UserMessage getUserMessage(String json){
+        try {
+            JSONObject jsonObject=new JSONObject(json);
+            int UserId=jsonObject.getInt("UserId");
+            int UserLevel=jsonObject.getInt("UserLevel");
+            int Level=jsonObject.getInt("Level");
+            String UserName=jsonObject.getString("UserName");
+            String UserNick=jsonObject.getString("UserNick");
+            String UserIcon=jsonObject.getString("UserIcon");
+            int Posts=jsonObject.getInt("Posts");
+            int AuditedPosts=jsonObject.getInt("AuditedPosts");
+            int Favorites=jsonObject.getInt("Favorites");
+            int Comments=jsonObject.getInt("Comments");
+            int Money=jsonObject.getInt("Money");
+            int Point=jsonObject.getInt("Point");
+            String Mobile=jsonObject.getString("Mobile");
+            String QQ=jsonObject.getString("QQ");
+            String Address=jsonObject.getString("Address");
+            String RealName=jsonObject.getString("RealName");
+            String Gender=jsonObject.getString("Gender");
+            String City=jsonObject.getString("City");
+            int AllMessages=jsonObject.getInt("AllMessages");
+            int UnreadMessages=jsonObject.getInt("UnreadMessages");
+            int Attentions=jsonObject.getInt("Attentions");
+            int Fans=jsonObject.getInt("Fans");
+            int Messages=jsonObject.getInt("Messages");
+            int IsVip=jsonObject.getInt("IsVip");
+            long VipExpiresp=jsonObject.getLong("VipExpires");
+            int VipPoint=jsonObject.getInt("VipPoint");
+            int CanTryoutVip=jsonObject.getInt("CanTryoutVip");
+            String CurrentCover=jsonObject.getString("CurrentCover");
+            int UserNumber=jsonObject.getInt("UserNumber");
+            String CommentStyle=jsonObject.getString("CommentStyle");
+            String Location=jsonObject.getString("Location");
+            boolean IsAttentioned=jsonObject.getBoolean("IsAttentioned");
+            boolean CanMessage=jsonObject.getBoolean("CanMessage");
+            UserMessage userMessage=new UserMessage(UserId, UserLevel, Level,UserName, UserNick, UserIcon,Posts, AuditedPosts,Favorites,Comments, Money, Point,Mobile,QQ, Address,RealName,Gender,City, AllMessages,UnreadMessages, Attentions,Fans,Messages,IsVip,VipExpiresp,VipPoint,CanTryoutVip,CurrentCover,UserNumber,CommentStyle,Location,IsAttentioned,CanMessage);
+            return userMessage;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static List<ListUserContent> getDataUserContent(String json){
+        List<ListUserContent> data=new ArrayList<>();
+        try {
+            JSONObject jsonObject=new JSONObject(json);
+            JSONArray jsonArray=jsonObject.getJSONArray("result");
+            for(int i=0;i<jsonArray.length();i++){
+                jsonObject=jsonArray.getJSONObject(i);
+                int articleId=jsonObject.getInt("ArticleId");
+                int categoryId=0;
+                int comments=jsonObject.getInt("Comments");
+                String content=jsonObject.getString("Content");
+                String title=jsonObject.getString("Title");
+                int favorites=jsonObject.getInt("Favorites");
+                int goods=jsonObject.getInt("Goods");
+                int hits=jsonObject.getInt("Hits");
+                String userIcon=jsonObject.getString("UserIcon");
+                int userId=jsonObject.getInt("UserId");
+                int userLevel=jsonObject.getInt("UserLevel");
+                String userNick=jsonObject.getString("UserNick");
+                int shares=jsonObject.getInt("Shares");
+                int picCount=jsonObject.getInt("PicCount");
+                String subject=jsonObject.getString("Subject");
+                ListUserContent listUserContent=null;
+                if(categoryId==29){
+                    Pic pic=getPic(jsonObject);
+                    JSONObject jsonObject1=jsonObject.getJSONObject("Audio");
+                    int duration=jsonObject1.getInt("Duration");
+                    String audiop=jsonObject1.getString("Audio");
+                    Audio audio=new Audio(audiop,duration);
+                    listUserContent=new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
+                            userId, userLevel, userNick, shares,pic,picCount,audio);
+                }else {
+                    if(picCount==0) {
+                        listUserContent = new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
+                                userId, userLevel, userNick, shares,subject);
+                    }else{
+                        Pic pic = getPic(jsonObject);
+                        listUserContent=new ListUserContent(articleId, categoryId, comments, content, title, favorites, goods, hits, userIcon,
+                                userId, userLevel, userNick, shares,pic,picCount,subject);
+                    }
+                }
+
+                data.add(listUserContent);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
 }

@@ -52,6 +52,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
+            android:layout_margin="10dp"
+            android:id="@+id/editText_commentContent"
             android:hint="你造么？不评论会挨揍的..."/>
 
         <FrameLayout
@@ -59,6 +61,7 @@
             android:layout_height="150dp"
             android:background="#52ff3474"
             android:layout_margin="10dp"
+            android:id="@+id/frameLayout"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true">
 
@@ -79,6 +82,49 @@
                 android:textColor="@android:color/black"
                 android:layout_gravity="center_horizontal"
                 android:text="搞怪表情随你拍"/>
+
         </FrameLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignLeft="@+id/frameLayout"
+                android:layout_below="@+id/frameLayout"
+                android:layout_above="@+id/linearLayout_chk"
+                android:id="@+id/imageVeiw_smilies">
+            </ImageView>
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             android:id="@+id/linearLayout_chk"
+             android:background="#e4e3e3"
+             android:layout_alignParentBottom="true"
+             android:orientation="horizontal">
+             <ImageView
+                 android:layout_margin="10dp"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/iamgeView_Aa"
+                 android:src="@drawable/chk_color_background"/>
+             <CheckBox
+                 android:layout_margin="10dp"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:button="@null"
+                 android:id="@+id/checkbox_smile"
+                 android:background="@drawable/smile_background"/>
+             <ImageView
+                 android:layout_margin="10dp"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/iamgeView_face"
+                 android:background="@drawable/chk_face_background" />
+             <ImageView
+                 android:layout_margin="10dp"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/imageView_feed"
+                 android:background="@drawable/chk_feed_background"/>
+         </LinearLayout>
         </RelativeLayout>
 </RelativeLayout>

@@ -104,4 +104,9 @@ public class MyAdapterThem extends BaseAdapter {
         }
         return listImage;
     }
+
+    public void getNoti(List<ActivityThemDomain> data){
+        this.data=data;
+        notifyDataSetChanged();
+    }
 }

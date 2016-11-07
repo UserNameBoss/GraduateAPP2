@@ -34,4 +34,11 @@ public class FormatTiem {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM-dd");
         return simpleDateFormat.format(date);
     }
+    public static String getFormatDateYear(long time){
+        Date date=new Date(time);
+        System.out.println("==========time="+time);
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yy-MM-dd");
+        return simpleDateFormat.format(date);
+    }
+
 }

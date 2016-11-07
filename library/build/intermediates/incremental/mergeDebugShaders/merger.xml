@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\GraduateAPP2\library\src\main\shaders"/></dataSet><dataSet config="debug"><source path="D:\GraduateAPP2\library\src\debug\shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\yangxiaolong\AndroidStudioProjects\GraduateAPP\library\src\main\shaders"/></dataSet><dataSet config="debug"><source path="E:\yangxiaolong\AndroidStudioProjects\GraduateAPP\library\src\debug\shaders"/></dataSet></merger>

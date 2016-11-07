@@ -158,7 +158,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-    class MyViewPagerAdapter extends FragmentStatePagerAdapter{
+    class MyViewPagerAdapter extends FragmentStatePagerAdapter {
 
         public MyViewPagerAdapter(FragmentManager fm) {
             super(fm);

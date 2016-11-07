@@ -141,7 +141,10 @@ public class NetWorkListUserContent{
                 public void handleMessage(Message msg) {
                     String result=msg.obj.toString();
                     //通过接口回调调用实现类中的方法，并传入json数据
-                    resultCallback.getMessage(result);
+                    System.out.println("========================Net.msg="+result);
+                    if(resultCallback!=null) {
+                        resultCallback.getMessage(result);
+                    }
                 }
             };
 

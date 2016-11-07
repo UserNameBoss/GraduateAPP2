@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
     android:background="@android:color/white"
     android:paddingTop="10dp">
     <RelativeLayout
@@ -35,6 +36,11 @@
             android:layout_height="20dp"
             android:layout_toRightOf="@+id/textView_name"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/textView_articleId"/>
 
         <ImageView
             android:src="@drawable/btn_sms_0"
@@ -144,6 +150,7 @@
                 android:background="@android:color/white"
                 android:src="@drawable/btn_good_0"
                 android:layout_width="25dp"
+                android:focusable="false"
                 android:layout_height="25dp" />
             <TextView
                 android:text="0"
@@ -165,6 +172,7 @@
                 android:id="@+id/imageButton_comment"
                 android:background="@drawable/comment_background"
                 android:layout_width="25dp"
+                android:focusable="false"
                 android:layout_height="25dp" />
             <TextView
                 android:text="0"
@@ -184,6 +192,7 @@
                 android:id="@+id/imageButton_share"
                 android:background="@drawable/btn_share_0"
                 android:layout_width="25dp"
+                android:focusable="false"
                 android:layout_height="25dp" />
             <TextView
                 android:text="0"
@@ -209,6 +218,7 @@
                 android:background="@android:color/white"
                 android:src="@drawable/btn_favorite_0"
                 android:layout_width="25dp"
+                android:focusable="false"
                 android:layout_height="25dp" />
             <TextView
                 android:text="0"

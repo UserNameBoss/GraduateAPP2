@@ -2,10 +2,12 @@ package com.example.yangxiaolong.graduateapp.frament.childframent;
 
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.yangxiaolong.graduateapp.R;
@@ -31,11 +33,13 @@ public class Fragment_essence extends Fragment {
     private NetWorkListUserContent netWorkListUserContent;
     private List<ListUserContent> data;
     String afterDate="1478077419527";
+    long timeMs= GETCurrentTime.getTimeMS();
+    MyListViewAdapter_Text myListViewAdapter_text;
 
     public Fragment_essence(){
-        long timeMs= GETCurrentTime.getTimeMS();
-        System.out.println("========timeMs="+timeMs);
-        pathKey="sign=43C0CD805060CB520A2"+timeMs+"&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&allowRandom=1&categoryId=32";
+
+
+        pathKey="sign=07635449DA61CD271D8B48275D4CBC3A&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&allowRandom=1&categoryId=32";
 
     }
 
@@ -46,25 +50,15 @@ public class Fragment_essence extends Fragment {
         View view=inflater.inflate(R.layout.fragment_essence, container, false);
         pullToRefreshListView= (PullToRefreshListView) view.findViewById(R.id.childListView_hot);
 
-        getResultCallback=(new NetWorkListUserContent.GetResultCallback() {
-            @Override
-            public void getMessage(String message) {
 
-                data= JsonToDomain.getData(message);
-                System.out.println("=================data.size="+data.size());
-                pullToRefreshListView.setAdapter(new MyListViewAdapter_Text(getContext(),data,1));
-            }
-        });
-
-        NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
 
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+                long afterDate=timeMs-100000;
                 long timeMs= GETCurrentTime.getTimeMS();
-                int a=77419527+10000000;
-                afterDate=afterDate.substring(5)+a;
-                pathKey="sign=9438347199880E01F3C"+timeMs+"&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&allowRandom=1&categoryId=32";
+                pathKey="sign=0376A8C9611D62CE51195EF118723F6F&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&allowRandom=1&categoryId=32";
                 NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
             }
 
@@ -73,8 +67,56 @@ public class Fragment_essence extends Fragment {
 
             }
         });
+
+        pullToRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                System.out.println("========点击条目--hot============");
+                myListViewAdapter_text.onClick(view.findViewById(R.id.imageButton_comment));
+
+            }
+        });
+
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        System.out.println("============================essence.onStart===================");
+        getResultCallback=(new NetWorkListUserContent.GetResultCallback() {
+            @Override
+            public void getMessage(String message) {
+                if(data==null) {
+                    data = JsonToDomain.getData(message);
+                    System.out.println("==================essence.data.size="+data.size());
+                    myListViewAdapter_text = new MyListViewAdapter_Text(getContext(), data, 1);
+                    pullToRefreshListView.setAdapter(myListViewAdapter_text);
+                }else{
+                    data=JsonToDomain.getData(message);
+                    System.out.println("==========================essence.OnCreagetView.data===!null================"+data.size());
+                    myListViewAdapter_text = new MyListViewAdapter_Text(getContext(), data, 1);
+                    pullToRefreshListView.setAdapter(myListViewAdapter_text);
+                }
 
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SystemClock.sleep(1000);
+                        if(getActivity()!=null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pullToRefreshListView.onRefreshComplete();
+                                }
+                            });
+                        }
+                    }
+                }).start();
+            }
+        });
+
+        NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
+    }
 }

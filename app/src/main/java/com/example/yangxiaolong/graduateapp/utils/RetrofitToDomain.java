@@ -1,6 +1,6 @@
 package com.example.yangxiaolong.graduateapp.utils;
 
-import com.example.yangxiaolong.graduateapp.domain.ListUserContent02;
+import com.example.yangxiaolong.graduateapp.domain.UserMessage;
 import com.example.yangxiaolong.graduateapp.interfaces.GETListUserContent;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class RetrofitToDomain {
 
         GETListUserContent getListUserContent = retrofit.create(GETListUserContent.class);
 
-        final Call<ListUserContent02> call = getListUserContent.addReviews(map);
+        final Call<UserMessage> call = getListUserContent.addReviews(map);
 
 
         new Thread(new Runnable() {
@@ -33,7 +33,7 @@ public class RetrofitToDomain {
             public void run() {
                 try {
 
-                    ListUserContent02 response = call.execute().body();
+                    UserMessage response = call.execute().body();
                     System.out.println("============response="+response);
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -92,7 +92,7 @@ public class PlaySoundService extends Service{
             String path = intent.getStringExtra("path");
             if(playStart) {
                 if(prePath!=path) {
-                    System.out.println("===========path=" + path);
+                    System.out.println("===========Service.path=" + path);
                     getPlayMedia(path);
                     prePath=path;
                 }else {

@@ -2,10 +2,12 @@ package com.example.yangxiaolong.graduateapp.frament.childframent;
 
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.yangxiaolong.graduateapp.R;
@@ -31,11 +33,13 @@ public class Fragment_image extends Fragment {
     private NetWorkListUserContent netWorkListUserContent;
     private List<ListUserContent> data;
     String afterDate="1477991848000";
+    long timeMs= GETCurrentTime.getTimeMS();
+    MyListViewAdapter_Text myListViewAdapter_text;
 
     public Fragment_image(){
-        long timeMs= GETCurrentTime.getTimeMS();
+
         System.out.println("========timeMs="+timeMs);
-        pathKey="sign=393800389EED581975A"+timeMs+"&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&allowRandom=1&categoryId=16";
+        pathKey="sign=353EEFB26AB52C965AF01136977C18CF&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&allowRandom=1&categoryId=16";
 
     }
 
@@ -46,26 +50,51 @@ public class Fragment_image extends Fragment {
         View view=inflater.inflate(R.layout.fragment_image, container, false);
         pullToRefreshListView= (PullToRefreshListView) view.findViewById(R.id.childListView_hot);
 
+
         getResultCallback=(new NetWorkListUserContent.GetResultCallback() {
             @Override
             public void getMessage(String message) {
-
-                data= JsonToDomain.getData(message);
-                System.out.println("=================data.size="+data.size());
-                pullToRefreshListView.setAdapter(new MyListViewAdapter_Text(getContext(),data,1));
+                if(data==null) {
+                    data = JsonToDomain.getData(message);
+                    System.out.println("=================image.data.size=" + data.size());
+                    if(getContext()!=null) {
+                        myListViewAdapter_text = new MyListViewAdapter_Text(getContext(), data, 1);
+                        pullToRefreshListView.setAdapter(myListViewAdapter_text);
+                    }
+                }else{
+                    data=JsonToDomain.getData(message);
+                    System.out.println("==========================image.OnCreagetView.data===!null================"+data.size());
+                    System.out.println("============================image.context"+getActivity());
+                    if(getActivity()!=null) {
+                        myListViewAdapter_text = new MyListViewAdapter_Text(getActivity(), data, 1);
+                        pullToRefreshListView.setAdapter(myListViewAdapter_text);
+                    }
+                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SystemClock.sleep(1000);
+                        if(getActivity()!=null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pullToRefreshListView.onRefreshComplete();
+                                }
+                            });
+                        }
+                    }
+                }).start();
             }
         });
 
         NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
-
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                long timeMs= GETCurrentTime.getTimeMS();
-                int a=91848000+10000000;
-                afterDate=afterDate.substring(5)+a;
-                pathKey="sign=393800389EED581975A"+timeMs+"&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&categoryId=16";
+                long afterDate=timeMs-100000;
+                pathKey="sign=D2EC4ADEA4455C5F4FB833C183DF419A&timestamp="+timeMs+"&afterDate="+afterDate+"&v=2140&categoryId=16";
                 NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
+                System.out.println("=============================下拉====================");
             }
 
             @Override
@@ -73,7 +102,25 @@ public class Fragment_image extends Fragment {
 
             }
         });
+
+        pullToRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                System.out.println("========点击条目--hot============");
+                myListViewAdapter_text.onClick(view.findViewById(R.id.imageButton_comment));
+
+            }
+        });
+
         return view;
     }
 
+    @Override
+    public void onStart() {
+
+        super.onStart();
+        System.out.println("=====================image.onStart=========================");
+
+    }
 }
