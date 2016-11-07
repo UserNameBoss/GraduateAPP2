@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/add_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="第一步 选择声音配图"
+            android:textSize="20sp"
+            android:textColor="@android:color/holo_red_light"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="立即拍摄"
+
+            android:layout_marginLeft="20dp"
+
+            android:layout_weight="1"
+            android:background="@drawable/buttonstyle"
+            android:id="@+id/button_takePhoto" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="从相册选择"
+            android:layout_marginRight="20dp"
+
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/buttonstyle"
+            android:id="@+id/button_pick" />
+    </LinearLayout>
+</LinearLayout>

@@ -20,6 +20,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -34,9 +37,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yangxiaolong.graduateapp.MyApplication;
 import com.example.yangxiaolong.graduateapp.R;
-import com.example.yangxiaolong.graduateapp.utils.SetShowMode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,7 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PostActivity extends Activity implements View.OnClickListener {
+public class SubjectItemActivity extends Activity implements View.OnClickListener {
 
     //声明投稿的内容
     @BindView(R.id.editText_article)
@@ -65,9 +66,11 @@ public class PostActivity extends Activity implements View.OnClickListener {
     private  File output;
     private Uri imageUri;
 
-    //声明一个标志
+    //声明一个判断是否设置图片的标志
     Boolean flag=true;
-
+    //声明一个判断是否设了title值的标志
+    Boolean flag2;
+    private String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,33 +80,42 @@ public class PostActivity extends Activity implements View.OnClickListener {
         }*/
         setContentView(R.layout.activity_post);
         ButterKnife.bind(this);
-        SetShowMode setShowMode=new SetShowMode();
-        if(((MyApplication)getApplication()).isNight){
-            setShowMode=new SetShowMode();
-            setShowMode.setMode(this);
-        }else {
-            setShowMode.cancelMode(this);
-        }
+
+        Intent intent_title=getIntent();
+        title=intent_title.getExtras().getString("title");
+        editText_article.setText("#"+title+"#");
+        editText_article.setTextColor(Color.BLACK);
+
+        String str=editText_article.getText().toString();
+        //int fstart=str.indexOf("#"+title+"#");
+        int fend=("#"+title+"#").length();
+        SpannableStringBuilder style=new SpannableStringBuilder(str);
+        style.setSpan(new ForegroundColorSpan(Color.RED),0,fend, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        editText_article.setText(style);
     }
 
 
     @OnClick({R.id.imageButton_back, R.id.imageButton_take_photo, R.id.imageButton_tab_pic,
             R.id.imageButton_subject, R.id.imageButton_tab_audio,R.id.textView_post,
-            })
+    })
     public void onClick(View view) {
         Intent intent = null;
         switch (view.getId()) {
             case R.id.imageButton_back:
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                if (editText_article.getText().toString().trim().equals("#"+title+"#")){
+                    intent = new Intent(this, SubjectActivity.class);
+                    startActivity(intent);
+                }else{
+                    systemHint();
+                }
                 break;
             case R.id.imageButton_take_photo:
 
-                    if (flag){
-                        pickPicture();
-                    }else{
-                       openMenu(view);
-                    }
+                if (flag){
+                    pickPicture();
+                }else{
+                    openMenu(view);
+                }
 
                 break;
             case R.id.imageButton_tab_pic:
@@ -154,8 +166,18 @@ public class PostActivity extends Activity implements View.OnClickListener {
                 }
                 break;
 
+
+            case R.id.button_cancel:
+                dialog.dismiss();
+                break;
+            case R.id.button_confirm:
+                intent = new Intent(this, SubjectActivity.class);
+                startActivity(intent);
+                break;
         }
     }
+
+
 
     /**
      * 打开弹出菜单重新选择或者移除相片
@@ -430,6 +452,23 @@ public class PostActivity extends Activity implements View.OnClickListener {
         button_pick.setOnClickListener(this);
     }
 
+    /**
+     * 系统提示对话框
+     * 提示是否保存草稿
+     */
+    private void systemHint() {
+        dialog = new Dialog(this, R.style.dialog);
+        dialog.setContentView(R.layout.custom_system_hint);
+        dialog.show();
 
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        window.setAttributes(params);//此句代码一定要放在show()后面，否则不起作用
+        dialog.setCanceledOnTouchOutside(true);
+        Button button_cancel = (Button) window.findViewById(R.id.button_cancel);
+        Button button_confirm = (Button) window.findViewById(R.id.button_confirm);
+        button_cancel.setOnClickListener(this);
+        button_confirm.setOnClickListener(this);
+    }
 
 }

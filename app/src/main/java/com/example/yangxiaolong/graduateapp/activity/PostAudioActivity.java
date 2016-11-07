@@ -2,62 +2,42 @@ package com.example.yangxiaolong.graduateapp.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.MenuItem;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yangxiaolong.graduateapp.MyApplication;
 import com.example.yangxiaolong.graduateapp.R;
-import com.example.yangxiaolong.graduateapp.utils.SetShowMode;
+import com.example.yangxiaolong.graduateapp.utils.GetPhoto;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URI;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PostActivity extends Activity implements View.OnClickListener {
-
-    //声明投稿的内容
-    @BindView(R.id.editText_article)
-    EditText editText_article;
-    @BindView(R.id.imageButton_take_photo)
-    ImageButton imageButton_take_photo;
-    @BindView(R.id.textView_uploadImage)
-    TextView textView_uploadImage;
-
-    private Dialog dialog;
-    private ImageView imageView;
+public class PostAudioActivity extends Activity implements View.OnClickListener {
     private static final int CROP_PHOTO = 2;
     private static final int REQUEST_CODE_PICK_IMAGE=3;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 6;
@@ -68,64 +48,41 @@ public class PostActivity extends Activity implements View.OnClickListener {
     //声明一个标志
     Boolean flag=true;
 
+    private Dialog dialog;
+    @BindView(R.id.imageButton_postAudio)
+     ImageButton imageButton_postAudio;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
-       /* if (getSupportActionBar() != null){
-            getSupportActionBar().hide();
-        }*/
-        setContentView(R.layout.activity_post);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_post_audio);
         ButterKnife.bind(this);
-        SetShowMode setShowMode=new SetShowMode();
-        if(((MyApplication)getApplication()).isNight){
-            setShowMode=new SetShowMode();
-            setShowMode.setMode(this);
-        }else {
-            setShowMode.cancelMode(this);
-        }
+        pickVoicePicture();
+
     }
 
-
-    @OnClick({R.id.imageButton_back, R.id.imageButton_take_photo, R.id.imageButton_tab_pic,
-            R.id.imageButton_subject, R.id.imageButton_tab_audio,R.id.textView_post,
-            })
+    @OnClick({R.id.imageButton_back, R.id.textView_nextStep, R.id.imageButton_postAudio, R.id.imageView_record})
     public void onClick(View view) {
-        Intent intent = null;
+        Intent intent=null;
         switch (view.getId()) {
             case R.id.imageButton_back:
-                intent = new Intent(this, MainActivity.class);
+                intent=new Intent(this,PostActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.imageButton_take_photo:
-
-                    if (flag){
-                        pickPicture();
-                    }else{
-                       openMenu(view);
-                    }
+            case R.id.textView_nextStep:
 
                 break;
-            case R.id.imageButton_tab_pic:
-                pickPicture();
+            case R.id.imageButton_postAudio:
+                pickVoicePictureAgain();
                 break;
-            case R.id.imageButton_subject:
-                intent=new Intent(this,SubjectActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.imageButton_tab_audio:
-                intent=new Intent(this,PostAudioActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.textView_post:
-                intent=new Intent(this,MainActivity.class);
-                startActivity(intent);
-               /* imageButton_take_photo.setImageResource(R.drawable.btn_take_photo);
-                flag=true;
-                textView_uploadImage.setVisibility(View.VISIBLE);*/
+            case R.id.imageView_record:
+
                 break;
 
-            //拍照
+            /**
+             * 选择声音配图对话框
+             */
             case R.id.button_takePhoto:
                 if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -139,7 +96,6 @@ public class PostActivity extends Activity implements View.OnClickListener {
                     takePhoto();
                 }
                 break;
-            //选择图片
             case R.id.button_pick:
                 if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -150,43 +106,75 @@ public class PostActivity extends Activity implements View.OnClickListener {
                             MY_PERMISSIONS_REQUEST_CALL_PHONE2);
 
                 }else {
-                    choosePhoto();
+                   choosePhoto();
                 }
                 break;
-
         }
     }
 
+
+
     /**
-     * 打开弹出菜单重新选择或者移除相片
+     * 重新选择声音配图对话框
      */
-    private void openMenu(View view) {
-        //1.实例化弹出菜单对象
-        PopupMenu popupMenu=new PopupMenu(this,view);
-        //2.使用菜单填充器对象将指定的菜单文件转化成菜单对象并挂载到弹出菜单对应的菜单上
-        popupMenu.getMenuInflater().inflate(R.menu.menu_post,popupMenu.getMenu());
-        //3.给弹出菜单注册监听器对象
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+    private void pickVoicePictureAgain() {
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle("选项菜单");//设置对话框的标题
+        final String[] options={"重新拍照","从相册选择"};
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            /**
+             * 用户点击指定数据条目时自动调用的方法
+             * @param dialog 事件源
+             * @param which 数据源数组中数据的索引值
+             */
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int order=item.getOrder();
-                if (order==100){
-                    pickPicture();
-                }else{
-                    imageButton_take_photo.setImageResource(R.drawable.btn_take_photo);
-                    flag=true;
-                    textView_uploadImage.setVisibility(View.VISIBLE);
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case 0:
+                        takePhoto();
+                        break;
+                    case 1:
+                        choosePhoto();
+                        break;
                 }
-                //Toast.makeText(PostActivity.this, "用户点击了["+item.getOrder()+"]菜单项", Toast.LENGTH_SHORT).show();
-                return false;
+                //Toast.makeText(PostAudioActivity.this, "option="+option, Toast.LENGTH_SHORT).show();
+
             }
         });
 
-        //4.显示弹出菜单
-        popupMenu.show();
+        //show()方法内部自动调用create()方法,显示对话框
+        builder.show();
 
+       /* //通过调用构建器对象的create()方法得到提示对话框
+        AlertDialog alertDialog= builder.create();
+        //用户点击提示对话框的外边不会销毁对话框,但按返回键可以取消对话框
+         alertDialog.setCanceledOnTouchOutside(true);
+        //让对话框显示
+        alertDialog.show();*/
     }
 
+    /**
+     * 弹出选择声音配图对话框
+     */
+    private void pickVoicePicture() {
+
+        dialog = new Dialog(this, R.style.dialog);
+        dialog.setContentView(R.layout.custom_pick_voice_picture);
+        //dialog.setCancelable(true);
+        dialog.show();
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        //params.width = config.getScreenWidth();  //设置对话框的宽度为屏幕宽 （此处得到的是我一开始获得并存放起来的屏幕宽）
+        window.setAttributes(params);//此句代码一定要放在show()后面，否则不起作用
+        dialog.setCanceledOnTouchOutside(true);
+        Button button_takePhoto = (Button) window.findViewById(R.id.button_takePhoto);
+        Button button_pick = (Button) window.findViewById(R.id.button_pick);
+        button_takePhoto.setOnClickListener(this);
+        button_pick.setOnClickListener(this);
+    }
 
 
     /**
@@ -247,6 +235,13 @@ public class PostActivity extends Activity implements View.OnClickListener {
     }
 
     public void onActivityResult(int req, int res, Intent data) {
+
+        // 方法1 Android获得屏幕的宽和高
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        int screenWidth  = display.getWidth();
+        int screenHeight  = display.getHeight();
+
         switch (req) {
             /**
              * 拍照的请求标志
@@ -258,18 +253,14 @@ public class PostActivity extends Activity implements View.OnClickListener {
                          * 该uri就是照片文件夹对应的uri
                          */
                         //Bitmap bit = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        Bitmap bitmap= this.twoRatio(imageUri,130,100);
-                        imageButton_take_photo.setImageBitmap(bitmap);
-
-                        //设完图片flag置为false
-                        flag=false;
-
-                        //去掉上传图片四个字
-                        this.textView_uploadImage.setVisibility(View.GONE);
+                        Bitmap bitmap= this.twoRatio(imageUri,screenWidth,screenHeight);
+                        imageButton_postAudio.setScaleType(ImageView.ScaleType.FIT_XY);
+                        imageButton_postAudio.setImageBitmap(bitmap);
                         //去掉对话框
                         this.dialog.dismiss();
-                        imageButton_take_photo.setImageBitmap(bitmap);
+
                     } catch (Exception e) {
+                        e.printStackTrace();
                         Toast.makeText(this,"程序崩溃",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -290,17 +281,12 @@ public class PostActivity extends Activity implements View.OnClickListener {
                          */
                         Uri uri = data.getData();
                         //Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
-                        Bitmap bitmap2= this.twoRatio(uri,130,100);
-                        imageButton_take_photo.setImageBitmap(bitmap2);
 
-                        //设完图片flag置为false
-                        flag=false;
-
-                        //去掉上传图片四个字
-                        this.textView_uploadImage.setVisibility(View.GONE);
+                        Bitmap bitmap2= this.twoRatio(uri,screenWidth,screenHeight);
+                        imageButton_postAudio.setScaleType(ImageView.ScaleType.FIT_XY);
+                        imageButton_postAudio.setImageBitmap(bitmap2);
                         //去掉对话框
                         this.dialog.dismiss();
-
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.d("tag",e.getMessage());
@@ -352,6 +338,7 @@ public class PostActivity extends Activity implements View.OnClickListener {
 
         //根据原始图片的宽高和缩放后图片的宽高算出最小值作为图片的采样率
         int ratio=Math.min(oldWidth/newWidth,oldHeight/newHeight);
+        //int ratio=(oldWidth/newWidth);
 
         System.out.println("ratio="+ratio);
         //设置图片的采用率
@@ -377,8 +364,7 @@ public class PostActivity extends Activity implements View.OnClickListener {
      *  判断用户是否授予该权限
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-    {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
         if (requestCode == MY_PERMISSIONS_REQUEST_CALL_PHONE)
         {
@@ -388,7 +374,7 @@ public class PostActivity extends Activity implements View.OnClickListener {
             } else
             {
                 // Permission Denied
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "权限被拒绝", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -401,35 +387,11 @@ public class PostActivity extends Activity implements View.OnClickListener {
             } else
             {
                 // Permission Denied
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "权限被拒绝 ", Toast.LENGTH_SHORT).show();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
-
-
-    /**
-     * 弹出选择图片对话框
-     */
-    private void pickPicture() {
-
-        dialog = new Dialog(this, R.style.dialog);
-        dialog.setContentView(R.layout.custom_pick_picture);
-        //dialog.setCancelable(true);
-        dialog.show();
-
-        Window window = dialog.getWindow();
-        WindowManager.LayoutParams params = window.getAttributes();
-        //params.width = config.getScreenWidth();  //设置对话框的宽度为屏幕宽 （此处得到的是我一开始获得并存放起来的屏幕宽）
-        window.setAttributes(params);//此句代码一定要放在show()后面，否则不起作用
-        dialog.setCanceledOnTouchOutside(true);
-        Button button_takePhoto = (Button) window.findViewById(R.id.button_takePhoto);
-        Button button_pick = (Button) window.findViewById(R.id.button_pick);
-        button_takePhoto.setOnClickListener(this);
-        button_pick.setOnClickListener(this);
-    }
-
 
 
 }
