@@ -215,6 +215,7 @@ android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="325dp">
         <Button
+            android:id="@+id/ime_pay"
             android:text="立即支付"
             android:textSize="18dp"
             android:background="#ff3344"
