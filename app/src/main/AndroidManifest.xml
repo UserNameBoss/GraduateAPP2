@@ -15,11 +15,8 @@
     <!-- 蓝牙分享所需的权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApplication"
@@ -99,28 +96,32 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".activity.My_Login_Activity"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
-
+        <activity
+            android:name=".activity.My_Login_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
         <activity android:name=".activity.PostActivity" />
         <activity android:name=".activity.AuditActivity" />
-        <activity android:name=".activity.SubjectActivity"></activity>
-        <activity android:name=".activity.SubjectItemActivity"></activity>
-        <activity android:name=".activity.PostAudioActivity"></activity>
-
-
-        <activity android:name=".activity.StoreDiscount_Activity"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"  ></activity>
-        <activity android:name=".activity.VipHelp_Activity"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
-        <activity android:name=".activity.MessageSet_Activity"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" ></activity>
-        <activity android:name=".activity.Messagedelete_Activity"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
-        <activity android:name=".activity.CommonProblem_Avtivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
-        <activity android:name=".activity.BuyVip_Activity"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
+        <activity android:name=".activity.SubjectActivity" />
+        <activity android:name=".activity.SubjectItemActivity" />
+        <activity android:name=".activity.PostAudioActivity" />
+        <activity
+            android:name=".activity.StoreDiscount_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.VipHelp_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.MessageSet_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.Messagedelete_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.CommonProblem_Avtivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.BuyVip_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
         <activity
             android:name=".activity.CommentActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
@@ -133,7 +134,11 @@
         <activity
             android:name=".activity.IconUserInforActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
-        <activity android:name=".activity.SendMessageActivity"></activity>
+        <activity android:name=".activity.SendMessageActivity" />
+
+        <activity android:name=".activity.LoginPagerActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            ></activity>
     </application>
 
 </manifest>

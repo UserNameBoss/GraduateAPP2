@@ -4,19 +4,17 @@ package com.example.yangxiaolong.graduateapp.frament;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +26,7 @@ import com.example.yangxiaolong.graduateapp.MyApplication;
 import com.example.yangxiaolong.graduateapp.MyView.CircleImageView;
 import com.example.yangxiaolong.graduateapp.MyView.ObservableScrollView;
 import com.example.yangxiaolong.graduateapp.R;
+import com.example.yangxiaolong.graduateapp.activity.LoginPagerActivity;
 import com.example.yangxiaolong.graduateapp.activity.My_Friends_Activity;
 import com.example.yangxiaolong.graduateapp.activity.My_Gold_Activity;
 import com.example.yangxiaolong.graduateapp.activity.My_Settins_Activity;
@@ -35,6 +34,11 @@ import com.example.yangxiaolong.graduateapp.activity.My_Task_Activity;
 import com.example.yangxiaolong.graduateapp.activity.My_Vip_Activity;
 import com.example.yangxiaolong.graduateapp.activity.My_Yellow_Activity;
 import com.example.yangxiaolong.graduateapp.utils.SetShowMode;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,6 +101,46 @@ public class Fragment_my extends Fragment {
     LinearLayout linearLayoutUserInformation;
     @BindView(R.id.textView_bahao)
     TextView textView_bahao;
+    @BindView(R.id.img_user_gender)
+    ImageView imgUserGender;
+    @BindView(R.id.img_gold)
+    ImageView imgGold;
+    @BindView(R.id.img_vip)
+    ImageView imgVip;
+    @BindView(R.id.text_vip)
+    TextView textVip;
+    @BindView(R.id.img_task)
+    ImageView imgTask;
+    @BindView(R.id.text_task)
+    TextView textTask;
+    @BindView(R.id.img_gameList)
+    ImageView imgGameList;
+    @BindView(R.id.text_gameList)
+    TextView textGameList;
+    @BindView(R.id.img_lv)
+    ImageView imgLv;
+    @BindView(R.id.text_jokeLv)
+    TextView textJokeLv;
+    @BindView(R.id.img_nightMode)
+    ImageView imgNightMode;
+    @BindView(R.id.text_nightMode)
+    TextView textNightMode;
+    @BindView(R.id.img_changeStyle)
+    ImageView imgChangeStyle;
+    @BindView(R.id.img_shareFriends)
+    ImageView imgShareFriends;
+    @BindView(R.id.text_shareFriends)
+    TextView textShareFriends;
+    @BindView(R.id.img_moreSettings)
+    ImageView imgMoreSettings;
+    @BindView(R.id.text_moreSettings)
+    TextView textMoreSettings;
+    @BindView(R.id.scrollView_my)
+    ObservableScrollView scrollViewMy;
+    @BindView(R.id.imageView_login_add)
+    ImageView imageViewLoginAdd;
+    @BindView(R.id.linearLayout_my_titleBar)
+    LinearLayout linearLayoutMyTitleBar;
 
 
     private ObservableScrollView scrollView_my;
@@ -104,7 +148,13 @@ public class Fragment_my extends Fragment {
     private ImageView imageView_changeStyle;
     private boolean isChecked;
 
+
     private SetShowMode setShowMode;
+    private int flag;
+
+    private SharedPreferences sharedPreferences;
+
+    private String name, gender, userIconPath;
 
     public Fragment_my() {
         // Required empty public constructor
@@ -128,29 +178,30 @@ public class Fragment_my extends Fragment {
         this.linearLayout = (LinearLayout) view.findViewById(R.id.linearLayout_my_titleBar);
         this.imageView_changeStyle = (ImageView) view.findViewById(R.id.img_changeStyle);
         this.imgStatu();
-        if(setShowMode==null){
-            setShowMode=new SetShowMode();
+        if (setShowMode == null) {
+            setShowMode = new SetShowMode();
         }
+
+        this.flag=((MyApplication)this.getActivity().getApplication()).flag;
+
+        if(flag==1){
+            this.loginAndShow();
+        }
+
+        System.out.println("执行了onCreateView");
         this.imageView_changeStyle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isChecked) {
                     imageView_changeStyle.setImageResource(R.drawable.bg_chkbox_new_1);
                     isChecked = true;
-                    ((MyApplication)getActivity().getApplication()).isNight=true;
+                    ((MyApplication) getActivity().getApplication()).isNight = true;
                     setShowMode.setMode(getActivity());
 
                 } else {
                     imageView_changeStyle.setImageResource(R.drawable.bg_chkbox_new_0);
                     isChecked = false;
-                    ((MyApplication)getActivity().getApplication()).isNight=false;
-                  /* if(setShowMode.i==0){
-                       setShowMode.cancelMode(getActivity());
-                   }else {
-                       for(int i=0;i<setShowMode.i;i++){
-                           setShowMode.cancelMode(getActivity());
-                       }
-                   }*/
+                    ((MyApplication) getActivity().getApplication()).isNight = false;
                     setShowMode.cancelMode(getActivity());
 
                 }
@@ -174,10 +225,77 @@ public class Fragment_my extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser && this.scrollView_my != null) {
-            this.scrollView_my.scrollTo(0, 0);
+        if (isVisibleToUser) {
+            if(this.scrollView_my != null){
+                this.scrollView_my.scrollTo(0, 0);
+            }
+            System.out.println("可见了");
         }
 
+    }
+
+    private void loginUserInfo(){
+        this.sharedPreferences = getActivity().getSharedPreferences("userInfo.xml", Context.MODE_PRIVATE);
+        if(flag==1){
+            name = sharedPreferences.getString("name", null);
+            gender = sharedPreferences.getString("gender", null);
+            userIconPath = sharedPreferences.getString("userIcon", null);
+            if (name != null) {
+                loginUserName.setText(name);
+            }
+            if (gender != null) {
+                if ("MALE".equals(gender)) {
+                    imgUserGender.setImageResource(R.drawable.night_icon_man);
+                }
+            }
+            if (userIconPath != null) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        InputStream inputStream = null;
+                        try {
+                            URL url = new URL(userIconPath);
+                            inputStream = url.openStream();
+                            final Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            circleImageViewUserImg.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    circleImageViewUserImg.setImageBitmap(bitmap);
+                                }
+                            });
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } finally {
+                            if (inputStream != null) {
+                                try {
+                                    inputStream.close();
+                                    inputStream = null;
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                }).start();
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loginUserInfo();
+        if(this.scrollView_my != null){
+            this.scrollView_my.scrollTo(0, 0);
+        }
+        boolean bl=((MyApplication)getActivity().getApplication()).loginFlag;
+        if(bl){
+            loginUserInfo();
+            loginAndShow();
+            bl=false;
+        }
     }
 
     @OnClick({R.id.circleImageView_userImg, R.id.btn_login, R.id.textView_userFansNumber, R.id.textView_userFocusNumber, R.id.textView_userContributeNumber, R.id.linearLayout_login_userID, R.id.textView_login_edit})
@@ -187,7 +305,7 @@ public class Fragment_my extends Fragment {
                 Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_login:
-                this.loginAndShow();
+                this.showLoginPager();
                 break;
             case R.id.textView_userFansNumber:
                 Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
@@ -287,31 +405,33 @@ public class Fragment_my extends Fragment {
         }
     }
 
-    private void loginAndShow(){
-        //登录
-                /*Intent intent=new Intent(getActivity(), My_Login_Activity.class);
-                startActivityForResult(intent,REQUEST_CODE);*/
-        int visibility=this.linearLayoutUserInformation.getVisibility();
-        if(visibility==View.GONE){
+    private void showLoginPager() {
+        Intent intent = new Intent(getActivity(), LoginPagerActivity.class);
+        startActivity(intent);
+    }
+
+    private void loginAndShow() {
+        int visibility = this.linearLayoutUserInformation.getVisibility();
+        if (visibility == View.GONE) {
             this.linearLayoutUserInformation.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             this.linearLayoutUserInformation.setVisibility(View.GONE);
         }
-        if(this.btnLogin.getVisibility()==View.VISIBLE){
+        if (this.btnLogin.getVisibility() == View.VISIBLE) {
             this.btnLogin.setVisibility(View.GONE);
-        }else {
+        } else {
             this.btnLogin.setVisibility(View.VISIBLE);
         }
-        if(this.textViewLoginEdit.getVisibility()==View.GONE){
+        if (this.textViewLoginEdit.getVisibility() == View.GONE) {
             this.textViewLoginEdit.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             this.textViewLoginEdit.setVisibility(View.GONE);
         }
-       if(this.linearLayoutLoginUserID.getVisibility()==View.GONE){
-           this.linearLayoutLoginUserID.setVisibility(View.VISIBLE);
-       }else {
-           this.linearLayoutLoginUserID.setVisibility(View.GONE);
-       }
+        if (this.linearLayoutLoginUserID.getVisibility() == View.GONE) {
+            this.linearLayoutLoginUserID.setVisibility(View.VISIBLE);
+        } else {
+            this.linearLayoutLoginUserID.setVisibility(View.GONE);
+        }
     }
 
 }
