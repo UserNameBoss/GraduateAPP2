@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+    android:background="#ff3344"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ImageView_changecolor_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingRight="40dp"
+        android:src="@drawable/btn_back_0" />
+
+    <TextView
+        android:layout_gravity="center"
+        android:text="变色评论"
+        android:textSize="25dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+     <ScrollView
+         android:layout_width="match_parent"
+         android:layout_height="500dp">
+         <LinearLayout
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+
+             <LinearLayout
+                 android:background="#FFEFE8E8"
+                 android:orientation="vertical"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+
+                 <ImageView
+                     android:src="@drawable/exclusive_comment"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content" />
+                 <TextView
+                     android:text="特权规则"
+                     android:textSize="15dp"
+                     android:paddingLeft="10dp"
+                     android:paddingBottom="10dp"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content" />
+             </LinearLayout>
+
+             <TextView
+                 android:text="1、开通会员后，在评论区写评论时，可以自定义彩色字体，彰显与众不同的尊贵身份。"
+                 android:textSize="15sp"
+                 android:paddingLeft="10dp"
+                 android:paddingRight="20dp"
+                 android:paddingTop="10dp"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" />
+
+             <TextView
+                 android:text="2、会员到期后，评论区颜色将变默认黑色，此时其他用户也看不到你的变色评论了。"
+                 android:textSize="15sp"
+                 android:paddingLeft="10dp"
+                 android:paddingRight="20dp"
+                 android:paddingTop="20dp"
+                 android:paddingBottom="10dp"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" />
+
+             <TextView
+                 android:layout_marginTop="20dp"
+                 android:background="#FFEFE8E8"
+                 android:layout_width="match_parent"
+                 android:layout_height="30dp" />
+
+         </LinearLayout>
+
+
+
+
+     </ScrollView>
+
+
+    <Button
+        android:id="@+id/button_changecolor_dredgevip"
+        android:layout_margin="10dp"
+        android:text="开通会员"
+        android:textSize="17sp"
+        android:background="#ff3344"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+</LinearLayout>

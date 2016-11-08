@@ -95,8 +95,7 @@ public class Comment_Collect_Activity extends AppCompatActivity  implements View
                    this.ViewPager_Comment_Collect.setCurrentItem(0);
                    break;
                case  R.id.TextView_MyCollect:
-                  /* this.ImageView_MyCollect.setBackgroundColor(Color.parseColor("#ff3344"));
-                   this.ImageView_MyComment.setBackgroundColor(Color.parseColor("#ffffff"));*/
+
                    this.ViewPager_Comment_Collect.setCurrentItem(1);
                    break;
            }

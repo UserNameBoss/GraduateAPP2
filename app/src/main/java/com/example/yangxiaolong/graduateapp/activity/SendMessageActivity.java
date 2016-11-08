@@ -38,6 +38,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         userName = intent.getStringExtra("userName");
         editText_SendMessag.setOnClickListener(this);
         textView_SendMessag.setOnClickListener(this);
+        textView_ToUserName.setText(userName);
     }
 
     @Override

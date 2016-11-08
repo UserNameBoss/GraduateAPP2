@@ -55,6 +55,9 @@ public class Fragment_activityThem extends Fragment {
                              Bundle savedInstanceState) {
         final View view=inflater.inflate(R.layout.fragment_activity_them, container, false);
         pullToRefreshListView= (PullToRefreshListView) view.findViewById(R.id.childListView_them);
+        View view1=inflater.inflate(R.layout.empthy_background,null);
+        pullToRefreshListView.setEmptyView(view1);
+
         getResultCallback=(new NetWorkListUserContent.GetResultCallback() {
             @Override
             public void getMessage(String message) {

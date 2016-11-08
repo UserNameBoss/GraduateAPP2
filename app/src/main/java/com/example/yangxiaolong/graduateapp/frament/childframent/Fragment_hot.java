@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.yangxiaolong.graduateapp.MyView.MygifImage;
 import com.example.yangxiaolong.graduateapp.R;
 import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
 import com.example.yangxiaolong.graduateapp.utils.GETCurrentTime;
@@ -41,6 +42,7 @@ public class Fragment_hot extends Fragment {
     String afterDate="1478003200000";
     private MyListViewAdapter_Text myListViewAdapter_text;
     long timeMs;
+    MygifImage mygifImage;
 
     public Fragment_hot(){
         timeMs= GETCurrentTime.getTimeMS();
@@ -55,7 +57,46 @@ public class Fragment_hot extends Fragment {
         View view=inflater.inflate(R.layout.fragment_hot02, container, false);
         pullToRefreshListView= (PullToRefreshListView) view.findViewById(R.id.childListView_hot);
         System.out.println("=====================hot.onCreateView====================");
+        View view1=inflater.inflate(R.layout.empthy_background,null);
+        //mygifImage=new MygifImage(getContext());
+        //mygifImage.setBackgroundColor(Color.WHITE);
+        pullToRefreshListView.setEmptyView(view1);
 
+        getResultCallback=(new NetWorkListUserContent.GetResultCallback() {
+            @Override
+            public void getMessage(String message) {
+                System.out.println("=====================hot.Message=================");
+                if(data==null) {
+                    data = JsonToDomain.getData(message);
+                    myListViewAdapter_text=new MyListViewAdapter_Text(getContext(), data, 1);
+                    pullToRefreshListView.setAdapter(myListViewAdapter_text);
+                }else {
+                    data=JsonToDomain.getData(message);
+                    System.out.println("==========================hot.OnCreagetView.data===!null================"+data.size());
+                    if(getContext()!=null) {
+                        myListViewAdapter_text = new MyListViewAdapter_Text(getContext(), data, 1);
+                        pullToRefreshListView.setAdapter(myListViewAdapter_text);
+                    }
+//                    myListViewAdapter_text.getNotifi(data);
+                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SystemClock.sleep(1000);
+
+                        if(getActivity()!=null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pullToRefreshListView.onRefreshComplete();
+                                }
+                            });
+                        }
+                    }
+                }).start();
+            }
+        });
+        NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
 
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
@@ -91,40 +132,7 @@ public class Fragment_hot extends Fragment {
     public void onStart() {
         super.onStart();
         System.out.println("===============hot.onStart================");
-        getResultCallback=(new NetWorkListUserContent.GetResultCallback() {
-            @Override
-            public void getMessage(String message) {
-                System.out.println("=====================hot.Message=================");
-                if(data==null) {
-                    data = JsonToDomain.getData(message);
-                    myListViewAdapter_text=new MyListViewAdapter_Text(getContext(), data, 1);
-                    pullToRefreshListView.setAdapter(myListViewAdapter_text);
-                }else {
-                    data=JsonToDomain.getData(message);
-                    System.out.println("==========================hot.OnCreagetView.data===!null================"+data.size());
-                    if(getContext()!=null) {
-                        myListViewAdapter_text = new MyListViewAdapter_Text(getContext(), data, 1);
-                        pullToRefreshListView.setAdapter(myListViewAdapter_text);
-                    }
-                }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SystemClock.sleep(1000);
 
-                        if(getActivity()!=null) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    pullToRefreshListView.onRefreshComplete();
-                                }
-                            });
-                        }
-                    }
-                }).start();
-            }
-        });
-        NetWorkListUserContent.getPostResult(path,pathKey,getResultCallback);
     }
 
     @Override
@@ -137,5 +145,11 @@ public class Fragment_hot extends Fragment {
     public void onPause() {
         super.onPause();
         System.out.println("=====================hot.onPause===============");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.out.println("=========================hot.onDestroy==========");
     }
 }

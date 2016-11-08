@@ -62,6 +62,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         this.imageView_message_line= (ImageView) findViewById(R.id.imageView_message_line);
         this.imageView_user_line= (ImageView) findViewById(R.id.imageView_my_line);
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
+        //保存viewPager上的fragment;
+        this.viewPager.setOffscreenPageLimit(fragments.length);
+
+
     }
 
 

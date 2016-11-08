@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -57,11 +58,18 @@
             android:src="@drawable/btn_setting_1" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/ListView_mes"
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="match_parent"
+        android:divider="#edecec"
+        android:dividerHeight="2dp"
+        android:id="@+id/message_listView"
+        ptr:ptrDrawable="@drawable/icon_logo36"
+        ptr:ptrAnimationStyle="flip"
+        android:gravity="top"
+        ptr:ptrHeaderBackground="@android:color/darker_gray"
+        ptr:ptrHeaderTextColor="#383838"></com.handmark.pulltorefresh.library.PullToRefreshListView>
+
 
 
 </LinearLayout>

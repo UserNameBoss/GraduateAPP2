@@ -135,6 +135,21 @@
             android:name=".activity.IconUserInforActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity android:name=".activity.SendMessageActivity" />
+        <activity
+            android:name=".activity.ChangeColorComment_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.ExclusiveMarking_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.VIPLevel_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.GoldAccelerate_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        <activity android:name=".activity.DoubleGold_Activity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        <activity android:name=".activity.SendMessageActivity" />
 
         <activity android:name=".activity.LoginPagerActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar"

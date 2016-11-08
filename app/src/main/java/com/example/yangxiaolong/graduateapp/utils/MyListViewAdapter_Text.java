@@ -53,6 +53,8 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
     private static CheckBox checkBox;
     private int flag;
     private NetWorkListUserContent.GetResultCallback getResultCallback;
+    private static int prePosition;
+    private static ViewHolder saveViewHolder;
 
     private SQListManager sqListManager;
 
@@ -83,18 +85,29 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = layoutInflater.inflate(R.layout.item_01, null);
+
         ViewHolder myViewHolder = null;
         ListUserContent listUserContent = data.get(position);
-        if (convertView.getTag()== null) {
-            myViewHolder = new ViewHolder(convertView);
+
+        if (convertView== null) {
+            convertView = layoutInflater.inflate(R.layout.item_01, null);
+            myViewHolder=new ViewHolder(convertView);
             convertView.setTag(myViewHolder);
             myViewHolder.imageView_play.setOnClickListener(this);
         } else {
-            myViewHolder = (ViewHolder) convertView.getTag();
+            if(prePosition==position){
+                myViewHolder=saveViewHolder;
+            }else{
+                myViewHolder = (ViewHolder) convertView.getTag();
+                if(myViewHolder==saveViewHolder){
+                    myViewHolder=new ViewHolder(convertView);
+                    convertView.setTag(myViewHolder);
+                    myViewHolder.imageView_play.setOnClickListener(this);
+                }
+            }
         }
         if(listUserContent!=null) {
-            if (listUserContent.getCategoryId() == 29) {
+            if (listUserContent.getAudio()!=null) {
                 myViewHolder.textView_hits.setText(String.valueOf(listUserContent.getHits())+"次播放");
                 Pic pic = listUserContent.getPic();
                 if(pic!=null) {
@@ -102,7 +115,6 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                     String url = pic.getUrl();
                     int width = pic.getWidth();
                     Picasso.with(context).load(url).resize(width, height).centerCrop().into(myViewHolder.imageView_content);
-
                 }else{
                     myViewHolder.imageView_content.setImageResource(R.mipmap.ic_launcher);
                 }
@@ -114,6 +126,8 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                 myViewHolder.textView_currentTime.setText(FormatTiem.formatTime(listUserContent.getAudio().getDuration()*1000));
                 myViewHolder.textView_audioPath.setText(String.valueOf(listUserContent.getAudio().getAudio()));
                 myViewHolder.progressBar.setMax(listUserContent.getAudio().getDuration()*1000);
+                myViewHolder.position=position;
+                System.out.println("===================List.position="+position);
                 myViewHolder.imageView_play.setTag(myViewHolder);
 
             }else{
@@ -188,10 +202,12 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                     this.progressBar=viewHolder.progressBar;
                     System.out.println("===========progressBar.id="+progressBar.getId());
                     this.textView_currentTime=viewHolder.textView_currentTime;
-
+                    prePosition=viewHolder.position;
+                    saveViewHolder=viewHolder;
                 }else{
                     intent.putExtra("playStart",false);
                 }
+
                 localBroadcastManager.sendBroadcast(intent);
                 System.out.println("==========点击了==============");
                 break;
@@ -239,7 +255,7 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                 if(listUserContent02.isFavorite()){
                     Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show();
                     imageButton_favorite.setImageResource(R.drawable.btn_favorite_0);
-                    getResultCallback = new NetWorkListUserContent.GetResultCallback() {
+                    getResultCallback=new NetWorkListUserContent.GetResultCallback() {
                         @Override
                         public void getMessage(String message) {
 
@@ -262,8 +278,10 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                             }
                         }
                     };
+
                     String path = "http://xb.huabao.me/?json=gender/article_action_v2";
-                    String pathKey = "sign=sign=96D8945D8C4E7719F8918636DB36D05E&timestamp="+GETCurrentTime.getTimeMS()+"&action=favorite&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId=53488838&userId=2172827";
+                    String pathKey = "sign=D70816CA97A6B2F55711E13CD593DAF8&timestamp="+GETCurrentTime.getTimeMS()+"&action=cancel_favorite&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId="+listUserContent02.getArticleId()+"&userId=2172827";
+
                     NetWorkListUserContent.getPostResult(path, pathKey, getResultCallback);
                     listUserContent02.setFavorite(false);
 
@@ -294,7 +312,7 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                         }
                     };
                     String path = "http://xb.huabao.me/?json=gender/article_action_v2";
-                    String pathKey = "sign=D70816CA97A6B2F55711E13CD593DAF8&timestamp="+GETCurrentTime.getTimeMS()+"&action=cancel_favorite&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId="+listUserContent02.getArticleId()+"&userId=2172827";
+                    String pathKey = "sign=sign=96D8945D8C4E7719F8918636DB36D05E&timestamp="+GETCurrentTime.getTimeMS()+"&action=favorite&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId="+listUserContent02.getArticleId()+"&userId=2172827";
                     NetWorkListUserContent.getPostResult(path, pathKey, getResultCallback);
                     listUserContent02.setFavorite(true);
                 }
@@ -337,6 +355,7 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                     bundle.putInt("width",pic.getWidth());
                 }
                 intent_comment.putExtras(bundle);
+                intent_comment.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent_comment);
                 break;
             case R.id.circleImageView_img:
@@ -439,6 +458,9 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
         TextView textView_type;
         @BindView(R.id.textView_articleId)
         TextView textView_articleId;
+
+        int position;
+
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
@@ -457,6 +479,7 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                 textView_currentTime.setText(FormatTiem.formatTime(progress));
             }else{
                 checkBox.setChecked(false);
+                progressBar.setProgress(progressBar.getMax());
             }
         }
     }
