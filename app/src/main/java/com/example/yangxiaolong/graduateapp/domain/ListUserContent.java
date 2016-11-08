@@ -4,6 +4,15 @@ package com.example.yangxiaolong.graduateapp.domain;
  * Created by 宇杰 on 2016/11/1.
  */
 public class ListUserContent {
+    public boolean isSave() {
+        return isSave;
+    }
+
+    public void setSave(boolean save) {
+        isSave = save;
+    }
+
+    private boolean isSave;
     //文章ID
     private int articleId;
     //种类ID
