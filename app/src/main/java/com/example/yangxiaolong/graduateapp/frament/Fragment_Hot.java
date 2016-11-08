@@ -81,7 +81,7 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.frament__hot, container, false);
-
+        System.out.println("==================HOT.onCreateView=============");
         localBroadcastManager= LocalBroadcastManager.getInstance(getActivity());
         localBroadcastManager.registerReceiver(new PathBroadcastReceiver(),intentFilter);
 
@@ -158,6 +158,7 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
         //设置适配器
         this.adapater=new MyFragementAdapater(getFragmentManager());
         this.viewPager.setAdapter(adapater);
+       // this.viewPager.setOffscreenPageLimit(fragments.size());
     }
 
     @Override
@@ -188,6 +189,8 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
         super.onDestroy();
         oldPosition=0;
         getActivity().unbindService(serviceConnection);
+        fragments.clear();
+        System.out.println("================HOT.onDestroy===============");
     }
 
     @Override
@@ -196,7 +199,7 @@ public class Fragment_Hot extends Fragment implements View.OnClickListener {
         Intent intent=new Intent(getActivity(), PlaySoundService.class);
         getActivity().bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
         System.out.println("==============HOT.Service============");
-        getRest();
+//        fragments.get(0).onStart();
 
     }
 

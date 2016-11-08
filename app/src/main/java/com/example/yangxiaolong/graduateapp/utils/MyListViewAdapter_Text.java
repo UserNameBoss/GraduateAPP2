@@ -94,7 +94,7 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
             myViewHolder = (ViewHolder) convertView.getTag();
         }
         if(listUserContent!=null) {
-            if (listUserContent.getCategoryId() == 29) {
+            if (listUserContent.getAudio()!=null) {
                 myViewHolder.textView_hits.setText(String.valueOf(listUserContent.getHits())+"次播放");
                 Pic pic = listUserContent.getPic();
                 if(pic!=null) {
@@ -262,8 +262,9 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                             }
                         }
                     };
-                    String path = "http://xb.huabao.me/?json=gender/article_action_v2";
-                    String pathKey = "sign=sign=96D8945D8C4E7719F8918636DB36D05E&timestamp="+GETCurrentTime.getTimeMS()+"&action=favorite&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId=53488838&userId=2172827";
+                       String path = "http://xb.huabao.me/?json=gender/article_action_v2";
+                    String pathKey = "sign=D70816CA97A6B2F55711E13CD593DAF8&timestamp="+GETCurrentTime.getTimeMS()+"&action=cancel_favorite&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId="+listUserContent02.getArticleId()+"&userId=2172827";
+
                     NetWorkListUserContent.getPostResult(path, pathKey, getResultCallback);
                     listUserContent02.setFavorite(false);
 
@@ -294,7 +295,7 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                         }
                     };
                     String path = "http://xb.huabao.me/?json=gender/article_action_v2";
-                    String pathKey = "sign=D70816CA97A6B2F55711E13CD593DAF8&timestamp="+GETCurrentTime.getTimeMS()+"&action=cancel_favorite&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId="+listUserContent02.getArticleId()+"&userId=2172827";
+                    String pathKey = "sign=sign=96D8945D8C4E7719F8918636DB36D05E&timestamp="+GETCurrentTime.getTimeMS()+"&action=favorite&v=2140&deviceId=267f265924954af5ad20ec74d63ddcd5&articleId="+listUserContent02.getArticleId()+"&userId=2172827";
                     NetWorkListUserContent.getPostResult(path, pathKey, getResultCallback);
                     listUserContent02.setFavorite(true);
                 }
@@ -337,6 +338,7 @@ public class MyListViewAdapter_Text extends BaseAdapter implements View.OnClickL
                     bundle.putInt("width",pic.getWidth());
                 }
                 intent_comment.putExtras(bundle);
+                intent_comment.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent_comment);
                 break;
             case R.id.circleImageView_img:

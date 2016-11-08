@@ -48,8 +48,10 @@ public class Fragment_image extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_image, container, false);
-        pullToRefreshListView= (PullToRefreshListView) view.findViewById(R.id.childListView_hot);
 
+        pullToRefreshListView= (PullToRefreshListView) view.findViewById(R.id.childListView_hot);
+        View view1=inflater.inflate(R.layout.empthy_background,null);
+        pullToRefreshListView.setEmptyView(view1);
 
         getResultCallback=(new NetWorkListUserContent.GetResultCallback() {
             @Override

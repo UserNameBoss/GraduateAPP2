@@ -7,17 +7,17 @@ import com.example.yangxiaolong.graduateapp.MyApplication;
 import com.example.yangxiaolong.graduateapp.R;
 import com.example.yangxiaolong.graduateapp.utils.SetShowMode;
 
-public class AuditActivity extends AppCompatActivity {
+public class AuditActivity extends AppCompatActivity{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audit);
         SetShowMode setShowMode=new SetShowMode();
         if(((MyApplication)getApplication()).isNight){
             setShowMode=new SetShowMode();
             setShowMode.setMode(this);
-        }else {
+        }else{
             setShowMode.cancelMode(this);
         }
     }

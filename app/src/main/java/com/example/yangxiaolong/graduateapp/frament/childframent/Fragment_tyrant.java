@@ -51,6 +51,9 @@ public class Fragment_tyrant extends Fragment {
         System.out.println("=======================================ONCreateVeiw=====================");
         View view = inflater.inflate(R.layout.fragment_tyrant, container, false);
         pullToRefreshListView = (PullToRefreshListView) view.findViewById(R.id.childListView_tyrant);
+        View view1=inflater.inflate(R.layout.empthy_background,null);
+        pullToRefreshListView.setEmptyView(view1);
+
         getResultCallback = (new NetWorkListUserContent.GetResultCallback() {
             @Override
             public void getMessage(String message) {

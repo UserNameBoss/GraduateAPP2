@@ -64,7 +64,8 @@ public class Fragment_sound extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_sound, container, false);
         pullToRefreshListView= (PullToRefreshListView) view.findViewById(R.id.childListView_hot);
-
+        View view1=inflater.inflate(R.layout.empthy_background,null);
+        pullToRefreshListView.setEmptyView(view1);
         getResultCallback=(new NetWorkListUserContent.GetResultCallback() {
             @Override
             public void getMessage(String message) {

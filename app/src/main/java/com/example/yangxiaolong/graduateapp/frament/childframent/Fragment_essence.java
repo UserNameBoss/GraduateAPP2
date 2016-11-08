@@ -49,7 +49,8 @@ public class Fragment_essence extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_essence, container, false);
         pullToRefreshListView= (PullToRefreshListView) view.findViewById(R.id.childListView_hot);
-
+        View view1=inflater.inflate(R.layout.empthy_background,null);
+        pullToRefreshListView.setEmptyView(view1);
 
 
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {

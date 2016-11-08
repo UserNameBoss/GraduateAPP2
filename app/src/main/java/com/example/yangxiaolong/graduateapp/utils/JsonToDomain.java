@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import com.example.yangxiaolong.graduateapp.domain.ActivityThemDomain;
 import com.example.yangxiaolong.graduateapp.domain.Audio;
 import com.example.yangxiaolong.graduateapp.domain.CommentPerson;
+import com.example.yangxiaolong.graduateapp.domain.Extend;
 import com.example.yangxiaolong.graduateapp.domain.ListUserContent;
+import com.example.yangxiaolong.graduateapp.domain.MessageDomain;
 import com.example.yangxiaolong.graduateapp.domain.Pic;
 import com.example.yangxiaolong.graduateapp.domain.Smilies;
 import com.example.yangxiaolong.graduateapp.domain.UserMessage;
@@ -340,6 +342,8 @@ public class JsonToDomain {
         }
         return null;
     }
+
+
     public static List<ListUserContent> getDataUserContent(String json){
         List<ListUserContent> data=new ArrayList<>();
         try {
@@ -363,7 +367,7 @@ public class JsonToDomain {
                 int picCount=jsonObject.getInt("PicCount");
                 String subject=jsonObject.getString("Subject");
                 ListUserContent listUserContent=null;
-                if(categoryId==29){
+                if(!jsonObject.isNull("Audio")){
                     Pic pic=getPic(jsonObject);
                     JSONObject jsonObject1=jsonObject.getJSONObject("Audio");
                     int duration=jsonObject1.getInt("Duration");
@@ -389,6 +393,58 @@ public class JsonToDomain {
             e.printStackTrace();
         }
 
+        return data;
+    }
+
+
+    public static List<MessageDomain> getListMessageDomain(String json){
+        List<MessageDomain> data=new ArrayList<>();
+        MessageDomain messageDomain;
+        try {
+            JSONObject jsonObject=new JSONObject(json);
+            JSONArray jsonArray=jsonObject.getJSONArray("result");
+            for(int i=0;i<jsonArray.length();i++) {
+                jsonObject=jsonArray.getJSONObject(i);
+                String Content = jsonObject.getString("Content");
+                String FromUserIcon=jsonObject.getString("FromUserIcon");
+                int FromUserId=jsonObject.getInt("FromUserId");
+                String FromUserNick=jsonObject.getString("FromUserNick");
+                boolean IsPublish=jsonObject.getBoolean("IsPublish");
+                boolean IsReaded=jsonObject.getBoolean("IsReaded");
+                long MessageId=jsonObject.getLong("MessageId");
+                long Pubtime=jsonObject.getLong("Pubtime");
+                int UserLevel=jsonObject.getInt("UserLevel");
+                if(!jsonObject.isNull("Extend")) {
+                    JSONObject jsonObject_extend = jsonObject.getJSONObject("Extend");
+                    int ArticleId = jsonObject_extend.getInt("ArticleId");
+                    int Comments = jsonObject_extend.getInt("Comments");
+                    String Title = jsonObject_extend.getString("Title");
+                    String UserIcon = jsonObject_extend.getString("UserIcon");
+                    int UserId = jsonObject_extend.getInt("UserId");
+                    int UserLevels = jsonObject_extend.getInt("UserLevel");
+                    String UserNick = jsonObject_extend.getString("UserNick");
+                    Extend extend;
+                    if(!jsonObject_extend.isNull("Pic")) {
+                        JSONObject jsonObject_pic = jsonObject_extend.getJSONObject("Pic");
+                        int Height = jsonObject_pic.getInt("Height");
+                        String Url = jsonObject_pic.getString("Url");
+                        int Width = jsonObject_pic.getInt("Width");
+                        Pic pic = new Pic(Height, Url, Width);
+                        extend = new Extend(ArticleId, Comments, pic, Title, UserIcon, UserId, UserLevels, UserNick);
+                    }else{
+                        extend = new Extend(ArticleId, Comments, null, Title, UserIcon, UserId, UserLevels, UserNick);
+
+                    }
+                    messageDomain = new MessageDomain(Content, FromUserIcon, FromUserId, FromUserNick, IsPublish, IsReaded, MessageId, Pubtime, UserLevel, extend);
+                }else{
+                    messageDomain = new MessageDomain(Content, FromUserIcon, FromUserId, FromUserNick, IsPublish, IsReaded, MessageId, Pubtime, UserLevel, null);
+
+                }
+                data.add(messageDomain);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return data;
     }
 }

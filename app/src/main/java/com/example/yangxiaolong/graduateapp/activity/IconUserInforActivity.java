@@ -146,6 +146,23 @@ public class IconUserInforActivity extends Activity implements View.OnClickListe
         viewHolder.textView_Canceladd.setOnClickListener(this);
         listView=pullToRefreshListView.getRefreshableView();
         listView.addHeaderView(view);
+
+
+        pullToRefreshListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(firstVisibleItem!=0){
+                    RelativeLayout_IconUser.setBackgroundColor(Color.RED);
+                }else{
+                    RelativeLayout_IconUser.setBackgroundColor(Color.BLACK);
+                }
+            }
+        });
     }
 
     @Override
@@ -261,6 +278,7 @@ public class IconUserInforActivity extends Activity implements View.OnClickListe
         ImageView imageView_collect;
         @BindView(R.id.iamgeView_comment)
         ImageView iamgeView_comment;
+
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
